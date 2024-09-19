@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS "levels" (
+    "id" BIGINT PRIMARY KEY,
+    "name" TEXT NOT NULL UNIQUE,
+    "image" TEXT NOT NULL,
+    "need_points" BIGINT NOT NULL UNIQUE,
+    "level_number" BIGINT NOT NULL UNIQUE,
+    "created_at" BIGINT DEFAULT (EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000),
+    "updated_at" BIGINT DEFAULT (EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000)
+);
+
+CREATE OR REPLACE FUNCTION set_dynamic_id()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.id := (SELECT COALESCE(MAX(id), 0) + 1 FROM "levels");
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER before_insert_levels
+BEFORE INSERT ON levels
+FOR EACH ROW
+EXECUTE FUNCTION set_dynamic_id();

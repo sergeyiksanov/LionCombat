@@ -1,0 +1,3 @@
+ALTER TABLE "levels" ALTER COLUMN "id" DROP DEFAULT;
+
+DROP SEQUENCE IF EXISTS levels_id_seq;

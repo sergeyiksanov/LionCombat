@@ -1,0 +1,88 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+.screen {
+  width: 300px;
+  text-align: center;
+}
+
+.level-info {
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.level-info h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.progress-bar {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  height: 20px;
+  margin-top: 10px;
+}
+
+.progress {
+  height: 100%;
+  width: 50%; /* Прогресс будет изменяться в зависимости от данных */
+  background-color: #4caf50;
+  border-radius: 10px;
+}
+
+.tap-score {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.tap-button {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: none;
+  background-color: #ff9800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+}
+
+.tap-button img {
+  width: 80px;
+  height: 80px;
+}
+
+.tap-button:active {
+  background-color: #e68900;
+}
+
+.levels-container {
+  text-align: center;
+}
+
+.levels-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.levels-container li {
+  margin: 10px 0;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
