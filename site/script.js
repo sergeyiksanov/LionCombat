@@ -7,13 +7,14 @@
 
   function getUserInfo() {
     let id = 0;
-    axios.get('https://c319-176-59-9-128.ngrok-free.app/api/levels')
-      .then(response => {
-        console.log(response.data); // Вывод данных, полученных от сервера
-      })
-      .catch(error => {
-        console.error('Ошибка запроса:', error); // Обработка ошибок
-      });
+    fetch(' https://1da2-176-59-9-128.ngrok-free.app/api/levels', {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true',
+      },
+    }).then(response => response.json())
+    .then(data => console.log('Server Response:', data));
   }
 
   function incrementTap() {
