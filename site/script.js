@@ -7,13 +7,13 @@
 
   function getUserInfo() {
     let id = 0;
-    fetch("https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits")
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-    });
+    axios.get('https://205d-176-59-9-128.ngrok-free.app/api/levels')
+      .then(response => {
+        console.log(response.data); // Вывод данных, полученных от сервера
+      })
+      .catch(error => {
+        console.error('Ошибка запроса:', error); // Обработка ошибок
+      });
   }
 
   function incrementTap() {
