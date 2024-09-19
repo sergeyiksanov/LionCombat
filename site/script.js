@@ -7,13 +7,19 @@
 
   function getUserInfo() {
     let id = 0;
-    fetch('https://205d-176-59-9-128.ngrok-free.app/api/levels', {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      // body: JSON.stringify({ id })
-    }).then(response => console.log('Server Response:', response));
+    fetch("https://205d-176-59-9-128.ngrok-free.app/api/levels")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Парсим JSON
+    })
+    .then(data => {
+        console.log(data); // Обрабатываем данные
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
   }
 
   function incrementTap() {
