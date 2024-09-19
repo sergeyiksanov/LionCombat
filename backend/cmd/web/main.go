@@ -15,8 +15,8 @@ func main() {
 	app := config.NewFiber(viperConfig)
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "https://205d-176-59-9-128.ngrok-free.app, http://localhost:8000", // Разрешенные источники
-		AllowMethods: "GET,POST,HEAD,PUT,DELETE,OPTIONS",                                // Разрешенные методы
+		AllowOrigins: "http://45.151.30.138:8000/",       // Разрешенные источники
+		AllowMethods: "GET,POST,HEAD,PUT,DELETE,OPTIONS", // Разрешенные методы
 	}))
 	// app.Use(func(ctx *fiber.Ctx) error {
 	// 	allowedOrigin := "https://youtube.com" // Ваш домен

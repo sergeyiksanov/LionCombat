@@ -13,8 +13,7 @@
           'Content-Type': 'application/json',
       },
       // body: JSON.stringify({ id })
-    }).then(response => response.json())
-    .then(data => console.log('Server Response:', data));
+    }).then(response => console.log('Server Response:', response));
   }
 
   function incrementTap() {
