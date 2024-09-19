@@ -7,7 +7,7 @@
 
   function getUserInfo() {
     let id = 0;
-    fetch("https://205d-176-59-9-128.ngrok-free.app/api/levels")
+    fetch("https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits")
     .then(response => {
         console.log(response);
     })
