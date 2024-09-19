@@ -7,7 +7,7 @@
 
   function getUserInfo() {
     let id = 0;
-    axios.get('https://205d-176-59-9-128.ngrok-free.app/api/levels')
+    axios.get('https://c319-176-59-9-128.ngrok-free.app/api/levels')
       .then(response => {
         console.log(response.data); // Вывод данных, полученных от сервера
       })
