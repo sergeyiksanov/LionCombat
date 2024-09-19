@@ -21,7 +21,7 @@ async def command_start_handler(message: Message, bot: Bot) -> None:
 
     await bot.set_chat_menu_button(
         chat_id=message.chat.id,
-        menu_button=MenuButtonWebApp(text="Open", web_app=WebAppInfo(url="https://d2a2-176-59-5-97.ngrok-free.app"))
+        menu_button=MenuButtonWebApp(text="Open", web_app=WebAppInfo(url="https://lioncombat.hopto.org/"))
     )
     await message.answer(text="Фестенг будет")
 
