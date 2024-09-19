@@ -3,16 +3,17 @@
   let currentLevel = 1;
   let progressPercentage = 50;
 
-//  const user = window.Telegram.WebApp.initDataUnsafe.user;
+  const user = window.Telegram.WebApp.initDataUnsafe.user;
 
   function getUserInfo() {
-    let id = 0;
-    fetch(' https://1da2-176-59-9-128.ngrok-free.app/api/levels', {
-      method: 'GET',
+    let id = user.id;
+    fetch(' https://1da2-176-59-9-128.ngrok-free.app/api/users/auth', {
+      method: 'POST',
       headers: {
           'Content-Type': 'application/json',
           'ngrok-skip-browser-warning': 'true',
       },
+      body: JSON.stringify({ initData }),
     }).then(response => response.json())
     .then(data => console.log('Server Response:', data));
   }
