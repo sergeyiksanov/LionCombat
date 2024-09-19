@@ -9,13 +9,7 @@
     let id = 0;
     fetch("https://205d-176-59-9-128.ngrok-free.app/api/levels")
     .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json(); // Парсим JSON
-    })
-    .then(data => {
-        console.log(data); // Обрабатываем данные
+        console.log(response);
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);

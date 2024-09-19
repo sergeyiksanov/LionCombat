@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"lioncombat.com/internal/config"
 )
@@ -18,21 +19,21 @@ func main() {
 		AllowOrigins: "http://45.151.30.138:8000/",       // Разрешенные источники
 		AllowMethods: "GET,POST,HEAD,PUT,DELETE,OPTIONS", // Разрешенные методы
 	}))
-	// app.Use(func(ctx *fiber.Ctx) error {
-	// 	allowedOrigin := "https://youtube.com" // Ваш домен
+	app.Use(func(ctx *fiber.Ctx) error {
+		allowedOrigin := "https://youtube.com" // Ваш домен
 
-	// 	// Получаем заголовки Origin и Referer
-	// 	origin := ctx.Get("Origin")
-	// 	referer := ctx.Get("Referer")
-	// 	log.Warnf("FROM : %+v", origin)
+		// Получаем заголовки Origin и Referer
+		origin := ctx.Get("Origin")
+		referer := ctx.Get("Referer")
+		log.Warnf("FROM : %+v", origin)
 
-	// 	// Если оба заголовка отсутствуют или не соответствуют разрешённому домену — блокируем запрос
-	// 	if (origin == "" && referer == "") || (origin != allowedOrigin && referer != allowedOrigin) {
-	// 		return ctx.Status(fiber.StatusForbidden).SendString("Запрос заблокирован: неразрешённый домен")
-	// 	}
+		// Если оба заголовка отсутствуют или не соответствуют разрешённому домену — блокируем запрос
+		if (origin == "" && referer == "") || (origin != allowedOrigin && referer != allowedOrigin) {
+			return ctx.Status(fiber.StatusForbidden).SendString("Запрос заблокирован: неразрешённый домен")
+		}
 
-	// 	return ctx.Next()
-	// })
+		return ctx.Next()
+	})
 
 	config.Bootstrap(&config.BootstrapConfig{
 		DB:       db,
