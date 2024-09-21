@@ -8,7 +8,7 @@ import ButtonImage from './../images/button-image.png';
 const baseUrl = 'https://5d23-176-59-18-45.ngrok-free.app/api'
 
 const GameScreen = () => {
-  const userDataTg = window.Telegram.WebApp.initData.user;
+  const userDataTg = window.Telegram.WebApp.WebAppUser;
 
   // const id = userDataTg.id;
   // const username = userDataTg.username;
