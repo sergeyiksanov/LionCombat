@@ -20,6 +20,7 @@ const LevelsScreen = () => {
 
 
   const items = levels.map((level) => {
+    console.log(level)
     if (level.ID == 1) {
       return (
         <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '16px', marginBottom: '16px', border: '2px solid #33ff3c', padding: '16px', borderRadius: '16px'}}>
