@@ -12,13 +12,13 @@ const GameScreen = () => {
   const progress = points;
 
   return (
-    <div className="game-screen" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
-      <Button style={{marginBottom: '16px'}} onClick={() => navigate('/levels')} view='flat-action' size='xl'>
+    <div className="game-screen"  style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px'}}>
+      <h1 style={{width: '100%', textAlign: 'center'}}>Lion Combat</h1>
+      <Button style={{marginBottom: '16px', width: '100%'}} onClick={() => navigate('/levels')} view='outlined' size='xl'>
         {level}
       </Button>
-      {/* <h2 onClick={() => navigate('/levels')}>{level}</h2> */}
-      <Progress style={{width: '100%'}} value={progress} theme='success' stack={[{color: '#33ff3c', value: progress},]}/>
-      <h3>{points} Р</h3>
+      <Progress value={progress} style={{width: '100%'}} size='m' theme='default' stack={[{color: '#33ff3c', value: progress},]}/>
+      <h3>{points}</h3>
       <Button onClick={() => setPoints(points + 1)} view="flat" pin='circle-circle' size="xs" style={{height: 'auto'}}>
         <img src={ButtonImage} width="192px"/>
       </Button>

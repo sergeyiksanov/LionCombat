@@ -1,13 +1,15 @@
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import GameScreen from './components/GameScreen';
 import LevelsScreen from './components/LevelsScreen';
 import RatingScreen from './components/RatingScreen';
 import PrizesScreen from './components/PrizesScreen';
 import { Button } from '@gravity-ui/uikit';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const App = () => {
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(0);
 
   return (
     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
@@ -20,9 +22,18 @@ const App = () => {
       </Routes>
       </div>
       <nav className="bottom-nav" style={{position: 'absolute', bottom: 0, marginBottom: '16px'}}>
-        <Button onClick={() => navigate('/')} style={{marginRight: '8px'}}>Игра</Button>
-        <Button onClick={() => navigate('/rating')} style={{marginRight: '8px'}}>Рейтинг</Button>
-        <Button onClick={() => navigate('/prizes')}>Призы</Button>
+        <Button onClick={() => {
+          setCurrentPage(0);
+          navigate('/')
+        }} style={{marginRight: '8px', color: currentPage === 0 ? '#33ff3c' : ''}}>Игра</Button>
+        <Button onClick={() => {
+          setCurrentPage(1);
+          navigate('/rating')
+        }} style={{marginRight: '8px', color: currentPage === 1 ? '#33ff3c' : ''}}>Рейтинг</Button>
+        <Button onClick={() => {
+          setCurrentPage(2);
+          navigate('/prizes')
+        }} style={{color: currentPage === 2 ? '#33ff3c' : ''}}>Призы</Button>
       </nav>
     </div>
   );
