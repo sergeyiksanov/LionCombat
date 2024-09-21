@@ -12,7 +12,11 @@ const LevelsScreen = () => {
       'Content-Type': 'application/json',
       'ngrok-skip-browser-warning': true
     }
-  }).then(response => console.log(JSON.stringify(response.json())))
+  }).then(response => response.text())
+  .then(data => {
+    console.log(JSON.parse(data));
+    levels = JSON.parse(data);
+  })
 
 
   const items = levels.map((level) => {
