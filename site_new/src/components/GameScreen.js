@@ -5,6 +5,8 @@ import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import ButtonImage from './button-image.png';
 
+const baseUrl = 'http://localhost:3001/api'
+
 const GameScreen = () => {
   const id = '0';
   const [user, setUser] = useState();
