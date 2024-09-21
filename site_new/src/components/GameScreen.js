@@ -12,7 +12,7 @@ const GameScreen = () => {
   const initDataUnsafe = WebApp.initDataUnsafe.user;
 
   const [user, setUser] = useState();
-  const [level, setLevel] = useState();
+  const [level, setLevel] = useState("");
   const [points, setPoints] = useState(0);
   fetch(baseUrl + "/users/auth", {
     method: 'POST',
@@ -24,18 +24,18 @@ const GameScreen = () => {
   }).then(response => response.text())
   .then(data => {
     setUser(JSON.parse(data).data);
-    setPoints(user.CountPoints);
+    // setPoints(user.CountPoints);
     
-    fetch(baseUrl + "/level?id=" + String(user.LevelID), {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': true
-      },
-    }).then(response => response.text())
-    .then(data => {
-      setLevel(JSON.parse(data).data);
-    })
+    // fetch(baseUrl + "/level?id=" + String(user.LevelID), {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'ngrok-skip-browser-warning': true
+    //   },
+    // }).then(response => response.text())
+    // .then(data => {
+    //   setLevel(JSON.parse(data).data);
+    // })
   });
 
   const navigate = useNavigate();
@@ -44,9 +44,9 @@ const GameScreen = () => {
   return (
     <div className="game-screen"  style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px'}}>
       <h1 style={{width: '100%', textAlign: 'center'}}>Lion Combat</h1>
-      <UserLabel type="person" style={{width: "100%", marginBottom: '16px'}}>Charlie Darwin</UserLabel>
+      <UserLabel type="person" style={{width: "100%", marginBottom: '16px'}}>user.Username</UserLabel>
       <Button style={{marginBottom: '16px', width: '100%'}} onClick={() => navigate('/levels')} view='outlined' size='xl'>
-        {level.Name + " (" + level.LevelNumber + ")"}
+        {level + " (" + level + ")"}
       </Button>
       <Progress value={progress} style={{width: '100%'}} size='m' theme='default' stack={[{color: '#33ff3c', value: progress},]}/>
       <h3>{points}</h3>
