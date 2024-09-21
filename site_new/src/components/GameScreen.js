@@ -69,7 +69,7 @@ const GameScreen = () => {
   return (
     <div className="game-screen" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px' }}>
       <h1 style={{ width: '100%', textAlign: 'center' }}>Lion Combat</h1>
-      <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>{JSON.stringify(user)}</UserLabel>
+      <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>{JSON.stringify(user.Username)}</UserLabel>
       <Button style={{ marginBottom: '16px', width: '100%' }} onClick={() => navigate('/levels')} view='outlined' size='xl'>
         {JSON.stringify(level.Name) + " (" + JSON.stringify(level.LevelNumber) + ")"}
       </Button>
