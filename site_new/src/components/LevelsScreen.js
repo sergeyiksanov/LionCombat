@@ -3,13 +3,9 @@ import '@gravity-ui/uikit/styles/styles.css';
 import ButtonImage from './button-image.png';
 
 const baseUrl = 'http://localhost:3001/api'
-
-const levels = [
-  { name: 'Уровень 1', pointsNeeded: 100, unlocked: true },
-  { name: 'Уровень 2', pointsNeeded: 200, unlocked: false },
-];
   
 const LevelsScreen = () => {
+  let levels = [];
   fetch(baseUrl + "/levels", {
     method: 'GET',
     headers: {
@@ -17,7 +13,7 @@ const LevelsScreen = () => {
       'ngrok-skip-browser-warning': true
     }
   }).then(response => response.json())
-  .then(data => console.log('Levels response:', data))
+  .then(data => levels = data)
 
 
   const items = levels.map((level) => {
