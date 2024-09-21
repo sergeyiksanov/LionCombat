@@ -1,11 +1,10 @@
 import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import ButtonImage from './../images/button-image.png';
-import LockIcon from './../images/Lock.svg';
+import LockImage from './../images/Lock@3x.svg';
 import { useState } from 'react';
-import { Icon } from '@gravity-ui/uikit';
 
-const baseUrl = 'https://b4ab-176-59-18-45.ngrok-free.app'
+const baseUrl = 'http://localhost:3001/api'
   
 const LevelsScreen = () => {
   const [levels, setLevels] = useState([]);
@@ -37,13 +36,11 @@ const LevelsScreen = () => {
     } else {
       return (
         <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '16px', marginBottom: '16px', padding: '16px', borderRadius: '16px', background: '#393439'}}>
-          <Icon data={LockIcon} size={16}/>
-          {/* <img src={ButtonImage} width={'100px'} style={{marginRight: '16px'}}/> */}
+          <img src={LockImage} width={'100px'} style={{marginRight: '16px'}}/>
           <div>
             <p style={{fontWeight: 'bold'}}>{level.Name}</p>
             <p>Необходимо: {level.NeedPoints}</p>
           </div>
-          <img src={ButtonImage} width={'24px'} style={{marginLeft: '16px'}}/>
         </div>
       );
     }
