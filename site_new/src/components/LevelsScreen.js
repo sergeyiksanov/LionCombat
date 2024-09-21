@@ -17,13 +17,13 @@ const LevelsScreen = () => {
 
 
   const items = levels.map((level) => {
-    if (level.unlocked) {
+    if (level.ID == 1) {
       return (
         <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '16px', marginBottom: '16px', border: '2px solid #33ff3c', padding: '16px', borderRadius: '16px'}}>
           <img src={ButtonImage} width={'100px'} style={{marginRight: '16px'}}/>
           <div>
-            <p style={{fontWeight: 'bold'}}>{level.name}</p>
-            <p>Необходимо: {level.pointsNeeded}</p>
+            <p style={{fontWeight: 'bold'}}>{level.Name}</p>
+            <p>Необходимо: {level.NeedPoints}</p>
           </div>
         </div>
       );
