@@ -5,7 +5,7 @@ import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import ButtonImage from './../images/button-image.png';
 
-const baseUrl = 'https://b4ab-176-59-18-45.ngrok-free.app/api'
+const baseUrl = 'https://5d23-176-59-18-45.ngrok-free.app/api'
 
 const GameScreen = () => {
   const id = '0';
@@ -16,7 +16,7 @@ const GameScreen = () => {
       'Content-Type': 'application/json',
       'ngrok-skip-browser-warning': true
     },
-    body: JSON.stringify(id)
+    body: JSON.stringify({id: id})
   }).then(response => response.text())
   .then(data => {
     console.log(JSON.parse(data).data);
