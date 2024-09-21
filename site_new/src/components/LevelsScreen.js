@@ -1,11 +1,12 @@
 import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import ButtonImage from './button-image.png';
+import { useState } from 'react';
 
 const baseUrl = 'http://localhost:3001/api'
   
 const LevelsScreen = () => {
-  let levels = [];
+  const [levels, setLevels] = useState([]);
   fetch(baseUrl + "/levels", {
     method: 'GET',
     headers: {
@@ -15,7 +16,7 @@ const LevelsScreen = () => {
   }).then(response => response.text())
   .then(data => {
     console.log(JSON.parse(data).data);
-    levels = JSON.parse(data).data;
+    setLevels(JSON.parse(data).data);
   })
 
 
