@@ -6,6 +6,21 @@ import '@gravity-ui/uikit/styles/styles.css';
 import ButtonImage from './button-image.png';
 
 const GameScreen = () => {
+  const id = '0';
+  const [user, setUser] = useState();
+  fetch(baseUrl + "/users/auth", {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': true
+    },
+    body: JSON.stringify(id)
+  }).then(response => response.text())
+  .then(data => {
+    console.log(JSON.parse(data).data);
+    setUser(JSON.parse(data).data);
+  })
+
   const [points, setPoints] = useState(0); // Теперь ошибка должна исчезнуть
   const navigate = useNavigate();
   const level = 'Уровень 1';
