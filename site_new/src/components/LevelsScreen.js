@@ -15,7 +15,7 @@ const LevelsScreen = () => {
   }).then(response => response.text())
   .then(data => {
     console.log(JSON.parse(data));
-    levels = JSON.parse(data);
+    levels = JSON.parse(data).data;
   })
 
 
