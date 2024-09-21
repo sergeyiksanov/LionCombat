@@ -14,10 +14,11 @@ const GameScreen = () => {
   const [user, setUser] = useState(null); // Делаем начальное значение null
   const [level, setLevel] = useState("");
   const [points, setPoints] = useState(0);
-  const [sendPoints, setSendPoints] = useState(0);
+  const [pointsToSend, setPointsToSend] = useState(0);
   const [loading, setLoading] = useState(true); // Лоадер
 
   const navigate = useNavigate();
+  const intervalRef = useRef(null);
 
   useEffect(() => {
     const sendPointsToServer = async () => {
@@ -132,7 +133,7 @@ const GameScreen = () => {
       <h3>{points}</h3>
       <Button onClick={() => {
         setPoints(points + 1);
-        setSendPoints(points + 1);
+        setPointsToSend(points + 1);
       }} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
       </Button>
