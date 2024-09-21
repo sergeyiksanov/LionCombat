@@ -13,7 +13,7 @@ const App = () => {
 
   return (
     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
-      <nav className="bottom-nav" style={{position: 'absolute', bottom: 0, marginBottom: '16px'}}>
+      <nav className="bottom-nav" style={{position: 'absolute', marginBottom: '16px'}}>
         <Button onClick={() => {
           setCurrentPage(0);
           navigate('/')
