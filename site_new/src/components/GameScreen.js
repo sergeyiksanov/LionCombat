@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // Добавляем useState
 import { useNavigate } from 'react-router-dom';
-import { Button, Progress } from '@gravity-ui/uikit';
+import { Button, Progress, UserLabel } from '@gravity-ui/uikit';
 import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import ButtonImage from './../images/button-image.png';
@@ -31,6 +31,7 @@ const GameScreen = () => {
   return (
     <div className="game-screen"  style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px'}}>
       <h1 style={{width: '100%', textAlign: 'center'}}>Lion Combat</h1>
+      <UserLabel type="person">Charlie Darwin</UserLabel>
       <Button style={{marginBottom: '16px', width: '100%'}} onClick={() => navigate('/levels')} view='outlined' size='xl'>
         {level}
       </Button>
