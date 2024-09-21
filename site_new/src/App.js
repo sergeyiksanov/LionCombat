@@ -13,14 +13,6 @@ const App = () => {
 
   return (
     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
-      <div>
-      <Routes>
-        <Route path="/" element={<GameScreen />} />
-        <Route path="/levels" element={<LevelsScreen />} />
-        <Route path="/rating" element={<RatingScreen />} />
-        <Route path="/prizes" element={<PrizesScreen />} />
-      </Routes>
-      </div>
       <nav className="bottom-nav" style={{position: 'absolute', bottom: 0, marginBottom: '16px'}}>
         <Button onClick={() => {
           setCurrentPage(0);
@@ -35,6 +27,14 @@ const App = () => {
           navigate('/prizes')
         }} style={{color: currentPage === 2 ? '#33ff3c' : ''}}>Призы</Button>
       </nav>
+      <div>
+      <Routes>
+        <Route path="/" element={<GameScreen />} />
+        <Route path="/levels" element={<LevelsScreen />} />
+        <Route path="/rating" element={<RatingScreen />} />
+        <Route path="/prizes" element={<PrizesScreen />} />
+      </Routes>
+      </div>
     </div>
   );
 };
