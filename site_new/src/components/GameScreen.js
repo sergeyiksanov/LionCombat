@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Progress } from '@gravity-ui/uikit';
 import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
-import ButtonImage from '../images/button-image.png';
+import ButtonImage from './../images/button-image.png';
 
 const baseUrl = 'https://b4ab-176-59-18-45.ngrok-free.app/api'
 
