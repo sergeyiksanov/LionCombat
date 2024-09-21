@@ -46,7 +46,7 @@ const GameScreen = () => {
       <h1 style={{width: '100%', textAlign: 'center'}}>Lion Combat</h1>
       <UserLabel type="person" style={{width: "100%", marginBottom: '16px'}}>Charlie Darwin</UserLabel>
       <Button style={{marginBottom: '16px', width: '100%'}} onClick={() => navigate('/levels')} view='outlined' size='xl'>
-        {level}
+        {level.Name + " (" + level.LevelNumber + ")"}
       </Button>
       <Progress value={progress} style={{width: '100%'}} size='m' theme='default' stack={[{color: '#33ff3c', value: progress},]}/>
       <h3>{points}</h3>
