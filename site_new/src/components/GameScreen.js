@@ -11,7 +11,7 @@ const GameScreen = () => {
   const id = '0';
   const [user, setUser] = useState();
   fetch(baseUrl + "/users/auth", {
-    method: 'GET',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'ngrok-skip-browser-warning': true
