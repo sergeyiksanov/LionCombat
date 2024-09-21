@@ -8,7 +8,11 @@ import ButtonImage from './../images/button-image.png';
 const baseUrl = 'https://5d23-176-59-18-45.ngrok-free.app/api'
 
 const GameScreen = () => {
-  const id = '0';
+  const userDataTg = window.Telegram.WebApp.initData.user;
+
+  const id = userDataTg.id;
+  const username = userDataTg.username;
+  const avatar_url = userDataTg.photo_url;
   const [user, setUser] = useState();
   fetch(baseUrl + "/users/auth", {
     method: 'POST',
@@ -16,7 +20,7 @@ const GameScreen = () => {
       'Content-Type': 'application/json',
       'ngrok-skip-browser-warning': true
     },
-    body: JSON.stringify({id: id})
+    body: JSON.stringify({id: id, username: username, avatar_url: avatar_url})
   }).then(response => response.text())
   .then(data => {
     console.log(JSON.parse(data).data);
