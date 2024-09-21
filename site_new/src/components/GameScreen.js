@@ -21,21 +21,19 @@ const GameScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Запрос на авторизацию пользователя
         const userResponse = await fetch(baseUrl + "/users/auth", {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: String(initDataUnsafe.id), username: initDataUnsafe.username })
+          body: JSON.stringify({ id: String(initDataUnsafe.id), username: initDataUnsafe.username, avatar_url: initDataUnsafe.photo_url })
         });
 
         const userData = await userResponse.json();
         setUser(userData.data);
         setPoints(userData.data.CountPoints);
 
-        // Запрос на получение уровня пользователя
         const levelResponse = await fetch(baseUrl + "/level?id=" + String(userData.data.LevelID), {
           method: 'GET',
           headers: {
@@ -49,11 +47,11 @@ const GameScreen = () => {
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
-        setLoading(false); // Отключаем лоадер после загрузки данных
+        setLoading(false);
       }
     };
 
-    fetchData(); // Вызов функции при монтировании компонента
+    fetchData();
   }, [initDataUnsafe.id, initDataUnsafe.username]);
 
   if (loading) {
