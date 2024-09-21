@@ -1,6 +1,8 @@
+import { User } from "@gravity-ui/uikit";
+
 const users = [
-    { username: 'Player1', points: 150, level: 'Уровень 1' },
-    { username: 'Player2', points: 200, level: 'Уровень 2' },
+    { username: 'Player1', points: 150, level: '1' },
+    { username: 'Player2', points: 200, level: '2' },
     // добавь остальных пользователей
   ];
   
@@ -8,11 +10,7 @@ const users = [
     return (
       <div className="rating-screen">
         {users.map((user) => (
-          <div key={user.username} className="user-card">
-            <h3>{user.username}</h3>
-            <p>{user.points} очков</p>
-            <p>{user.level}</p>
-          </div>
+          <User>Юзернейм: {user.username} | Своишки: {user.points} | Уровень: {user.level}</User>
         ))}
       </div>
     );
