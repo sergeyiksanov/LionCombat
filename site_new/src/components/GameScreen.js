@@ -119,7 +119,7 @@ const GameScreen = () => {
         {currentLevel?.Name + " (" + currentLevel?.LevelNumber + ")"}
       </Button>
       <Progress value={progress} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: progress }]} />
-      <h3>{points} / {currentLevel.NeedPoints}</h3>
+      <h3>{points}</h3>
       <Button onClick={handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
       </Button>
