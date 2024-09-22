@@ -20,6 +20,7 @@ const GameScreen = () => {
 
   const navigate = useNavigate();
 
+  // Первый useEffect для загрузки данных о пользователе и уровнях
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,7 +50,7 @@ const GameScreen = () => {
         const levelsData = await levelsResponse.json();
         setLevels(levelsData.data);
 
-        // Устанавливаем текущий уровень
+        // Устанавливаем начальный уровень, который пришел с данными о пользователе
         const currentLvl = levelsData.data.find(level => level.ID === userData.data.LevelID);
         setCurrentLevel(currentLvl);
 
@@ -66,7 +67,7 @@ const GameScreen = () => {
     const handleUnload = async () => {
       console.log("SEND POINTS");
       if (pointsToSend > 0) {
-        await fetch(baseUrl + "/users/add_points", {
+        await fetch(baseUrl + /users/add_points, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -84,15 +85,18 @@ const GameScreen = () => {
     };
   }, [idForTest, usernameForTest, pointsToSend]);
 
-  const handleAddPoints = () => {
-    console.log("ADD POINTS")
-    const nextLevel = levels.find(level => level.ID === currentLevel?.ID + 1);
-    
-    // Проверяем, хватает ли очков для перехода на следующий уровень
-    if (initialPoints + pointsToSend + 1 >= nextLevel?.NeedPoints) {
-      setCurrentLevel(nextLevel);
+  // Второй useEffect для обновления уровня при изменении очков
+  useEffect(() => {
+    if (currentLevel && levels.length > 0) {
+      const nextLevel = levels.find(level => level.ID === currentLevel?.ID + 1);
+      
+      if (initialPoints + pointsToSend >= nextLevel?.NeedPoints) {
+        setCurrentLevel(nextLevel);
+      }
     }
-    
+  }, [pointsToSend, currentLevel, initialPoints, levels]);
+
+  const handleAddPoints = () => {
     setPointsToSend(pointsToSend + 1);
   };
 
