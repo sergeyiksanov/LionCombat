@@ -29,7 +29,8 @@ const GameScreen = () => {
   const [levels, setLevels] = useState([]);
   const [currentLevel, setCurrentLevel] = useState(null);
   const [initialPoints, setInitialPoints] = useState(0);
-  const [pointsToSend, setPointsToSend] = useState(0); // Накопленные очки
+  const [pointsToSend, setPointsToSend] = useState(0);
+  const [pointsToSendSave, setPointsToSendSave] = useState(0); // Накопленные очки
   const [loading, setLoading] = useState(true);
   const [fullPoints, setFullPuints] = useState(0);
 
@@ -80,20 +81,20 @@ const GameScreen = () => {
 
   }, [userDataTg.id, userDataTg.username, pointsToSend]);
 
-  useEffect(() => {
-    setFullPuints(initialPoints);
-  }, [initialPoints]);
+  // useEffect(() => {
+  //   setFullPuints(initialPoints);
+  // }, [initialPoints]);
 
   // Второй useEffect для обновления уровня при изменении очков
   useEffect(() => {
     if (currentLevel && levels.length > 0) {
       const nextLevel = levels.find(level => level.ID === currentLevel?.ID + 1);
       
-      if (initialPoints + pointsToSend >= nextLevel?.NeedPoints) {
+      if (initialPoints + pointsToSendSave >= nextLevel?.NeedPoints) {
         setCurrentLevel(nextLevel);
       }
     }
-  }, [pointsToSend, currentLevel, initialPoints, levels]);
+  }, [pointsToSendSave, currentLevel, initialPoints, levels]);
 
   const timeoutRef = useRef(null);
 
@@ -112,15 +113,15 @@ const GameScreen = () => {
         }).finally(() => {
           setPointsToSend(0);
         });
-        setPointsToSend(0);
       }, 500)
     }
   });
 
   const handleAddPoints = () => {
     clearTimeout(timeoutRef.current);
-    setFullPuints(fullPoints + 1);
+    // setFullPuints(fullPoints + 1);
     setPointsToSend(pointsToSend + 1);
+    setPointsToSendSave(pointsToSendSave + 1);
   };
 
   if (loading) {
@@ -131,7 +132,7 @@ const GameScreen = () => {
     );
   }
 
-  const progress = fullPoints / levels?.find(level => level.ID === currentLevel?.ID + 1)?.NeedPoints * 100;
+  const progress = (pointsToSendSave + initialPoints) / levels?.find(level => level.ID === currentLevel?.ID + 1)?.NeedPoints * 100;
 
   return (
     <div className="game-screen" style={{ 
@@ -182,7 +183,7 @@ const GameScreen = () => {
       />
       </div>
       
-      <h3>{fullPoints} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
+      <h3>{initialPoints + pointsToSendSave} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
       
       <Button 
         onClick={handleAddPoints} 

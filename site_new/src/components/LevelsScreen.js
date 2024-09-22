@@ -23,6 +23,7 @@ const baseUrl = '/api/api'
 const LevelsScreen = () => {
   const [user, setUser] = useState(null);
   const [levels, setLevels] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const webApp = window.Telegram.WebApp;
   const userDataTg = webApp.initDataUnsafe.user;
@@ -30,20 +31,6 @@ const LevelsScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Получаем информацию о пользователе
-        const userResponse = await fetch(baseUrl + "/users/auth", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': true
-          },
-          body: JSON.stringify({ id: String(userDataTg.id), username: userDataTg.username })
-        });
-
-        const userData = await userResponse.json();
-        setUser(userData.data);
-
-        // Получаем список всех уровней
         const levelsResponse = await fetch(baseUrl + "/levels", {
           method: 'GET',
           headers: {
@@ -54,14 +41,25 @@ const LevelsScreen = () => {
 
         const levelsData = await levelsResponse.json();
         setLevels(levelsData.data);
+
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
 
-  }, [userDataTg.id, userDataTg.username]);
+  }, [levels]);
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Loader size="l" style={{color: '#33ff3c'}} />
+      </div>
+    );
+  }
 
   const items = levels.map((level) => {
     console.log(level)
