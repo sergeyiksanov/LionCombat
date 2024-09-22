@@ -4,7 +4,7 @@ import ButtonImage from './../images/button-image.png';
 import LockImage from './../images/Lock@3x.svg';
 import { useState } from 'react';
 
-const baseUrl = 'https://5d23-176-59-18-45.ngrok-free.app/api'
+const baseUrl = 'https://4be6-176-59-21-86.ngrok-free.app/api'
   
 const LevelsScreen = () => {
   const [levels, setLevels] = useState([]);
