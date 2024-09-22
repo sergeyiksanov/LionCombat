@@ -89,6 +89,7 @@ const GameScreen = () => {
   }, [idForTest, usernameForTest, pointsToSend]);
 
   const handleAddPoints = () => {
+    console.log("ADD POINTS")
     if (initialPoints + pointsToSend + 1 >= currentLevel.NeedPoints) {
       const nextLevel = levels.find(level => level.LevelNumber === currentLevel.LevelNumber + 1);
       if (nextLevel) {
@@ -118,7 +119,7 @@ const GameScreen = () => {
       </Button>
       <Progress value={initialPoints + pointsToSend} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: initialPoints + pointsToSend }]} />
       <h3>{initialPoints + pointsToSend}</h3>
-      <Button onClick={() => handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
+      <Button onClick={handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
       </Button>
     </div>
