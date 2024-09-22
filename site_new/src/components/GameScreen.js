@@ -108,7 +108,7 @@ const GameScreen = () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
+          body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend + initialPoints })
         });
       }, 500)
     }
