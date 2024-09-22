@@ -8,11 +8,16 @@ const users = [
   
   const RatingScreen = () => {
     
+    const items = levels.map((level) => {
+      console.log(level)
+      return (
+        <User>Юзернейм: {user.username} | Своишки: {user.points} | Уровень: {user.level}</User>
+      );
+    });
+
     return (
       <div className="rating-screen">
-        {users.map((user) => (
-          <User>Юзернейм: {user.username} | Своишки: {user.points} | Уровень: {user.level}</User>
-        ))}
+        {items}
       </div>
     );
   };
