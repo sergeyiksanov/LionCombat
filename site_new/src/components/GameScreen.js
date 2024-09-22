@@ -29,10 +29,9 @@ const GameScreen = () => {
   const [levels, setLevels] = useState([]);
   const [currentLevel, setCurrentLevel] = useState(null);
   const [initialPoints, setInitialPoints] = useState(0);
-  const [pointsToSend, setPointsToSend] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [fullPoints, setFullPuints] = useState(0);
-
+  const [pointsToSend, setPointsToSend] = useState(0);
+  
   const navigate = useNavigate();
 
   // Первый useEffect для загрузки данных о пользователе и уровнях
@@ -80,11 +79,10 @@ const GameScreen = () => {
 
   }, [userDataTg.id, userDataTg.username, pointsToSend]);
 
-  // useEffect(() => {
-  //   setFullPuints(initialPoints);
-  // }, [initialPoints]);
+  useEffect(() => {
+    setPointsToSend(initialPoints);
+  }, [initialPoints])
 
-  // Второй useEffect для обновления уровня при изменении очков
   useEffect(() => {
     if (currentLevel && levels.length > 0) {
       const nextLevel = levels.find(level => level.ID === currentLevel?.ID + 1);
@@ -93,14 +91,14 @@ const GameScreen = () => {
         setCurrentLevel(nextLevel);
       }
     }
-  }, [pointsToSend, currentLevel, initialPoints, levels]);
+  }, [pointsToSend, initialPoints, levels]);
 
   const timeoutRef = useRef(null);
 
   useEffect(() => {
     console.log("TIMER");
     if (pointsToSend > 0) {
-      timeoutRef.current = setTimeout(async () => {
+      const interval = setInterval(async () => {
         console.log("SEND POINTS");
         await fetch(baseUrl + "/users/add_points", {
           method: "POST",
@@ -108,14 +106,14 @@ const GameScreen = () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend + initialPoints })
+          body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
         });
-      }, 1000)
+      }, 3000);
+      return () => clearInterval(interval);
     }
   });
 
   const handleAddPoints = () => {
-    clearTimeout(timeoutRef.current);
     setPointsToSend(pointsToSend + 1);
   };
 
@@ -127,8 +125,8 @@ const GameScreen = () => {
     );
   }
 
-  const progress = (pointsToSend + initialPoints) / levels?.find(level => level.ID === currentLevel?.ID + 1)?.NeedPoints * 100;
-
+  const progress = (pointsToSend / levels.find(level => level.ID + 1 === currentLevel?.ID)?.NeedPoints) * 100;
+  
   return (
     <div className="game-screen" style={{ 
       display: 'flex', 
@@ -178,7 +176,7 @@ const GameScreen = () => {
       />
       </div>
       
-      <h3>{initialPoints + pointsToSend} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
+      <h3>{pointsToSend} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
       
       <Button 
         onClick={handleAddPoints} 
