@@ -17,14 +17,12 @@ import Level14Image from './../images/level_14.png';
 import Level15Image from './../images/level_15.png';
 import LockImage from './../images/Lock@3x.svg';
 import { useState, useEffect } from 'react';
-import { Button, Progress, UserLabel, Loader } from '@gravity-ui/uikit';
 
 const baseUrl = '/api/api'
   
 const LevelsScreen = () => {
   const [user, setUser] = useState(null);
   const [levels, setLevels] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const webApp = window.Telegram.WebApp;
   const userDataTg = webApp.initDataUnsafe.user;
@@ -63,7 +61,7 @@ const LevelsScreen = () => {
 
     fetchData();
 
-  }, [userDataTg.id, userDataTg.username, levels]);
+  }, [userDataTg.id, userDataTg.username]);
 
   const items = levels.map((level) => {
     console.log(level)
@@ -105,14 +103,6 @@ const LevelsScreen = () => {
       );
     }
   });
-
-  // if (loading) {
-  //   return (
-  //     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-  //       <Loader size="l" style={{color: '#33ff3c'}} />
-  //     </div>
-  //   );
-  // }
   
   return (
     <div className="levels-screen">
