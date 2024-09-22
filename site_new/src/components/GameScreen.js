@@ -134,39 +134,90 @@ const GameScreen = () => {
   const progress = fullPoints / levels?.find(level => level.ID === currentLevel?.ID + 1)?.NeedPoints * 100;
 
   return (
-    <div className="game-screen" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px' }}>
+    <div className="game-screen" style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      width: '100%', 
+      paddingTop: '100px' 
+    }}>
       <h1 style={{ width: '100%', textAlign: 'center' }}>Lion Kombat</h1>
-      <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>{user?.Username}</UserLabel>
-      <Button style={{ marginBottom: '16px', width: '100%' }} onClick={() => navigate('/levels')} view='outlined' size='xl'>
+      
+      <UserLabel 
+        type="person" 
+        style={{ 
+          width: '100%', 
+          textAlign: 'center', 
+          marginBottom: '16px' 
+        }}
+      >
+        {user?.Username}
+      </UserLabel>
+      
+      <Button 
+        style={{ 
+          marginBottom: '16px', 
+          width: '100%', 
+          maxWidth: '400px', 
+          textAlign: 'center' 
+        }} 
+        onClick={() => navigate('/levels')} 
+        view='outlined' 
+        size='xl'
+      >
         {currentLevel?.Name + " (" + currentLevel?.LevelNumber + ")"}
       </Button>
-      <Progress value={progress} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: progress }]} />
-      <h3>{fullPoints} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
-      <Button onClick={handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto', backgroundColor: '#1c181c', borderRadius: '50%' }}>
-      <img 
-        src={
-          currentLevel.ID === 1 || currentLevel.ID === null ? Level1Image :
-          currentLevel.ID === 2 ? Level2Image :
-          currentLevel.ID === 3 ? Level3Image :
-          currentLevel.ID === 4 ? Level4Image :
-          currentLevel.ID === 5 ? Level5Image :
-          currentLevel.ID === 6 ? Level6Image :
-          currentLevel.ID === 7 ? Level7Image :
-          currentLevel.ID === 8 ? Level8Image :
-          currentLevel.ID === 9 ? Level9Image :
-          currentLevel.ID === 10 ? Level10Image :
-          currentLevel.ID === 11 ? Level11Image :
-          currentLevel.ID === 12 ? Level12Image :
-          currentLevel.ID === 13 ? Level13Image :
-          currentLevel.ID === 14 ? Level14Image : 
-          Level15Image
-        } 
-        width="192px" 
-        alt={`Level ${currentLevel.ID}`}
+      
+      <Progress 
+        value={progress} 
+        style={{ 
+          width: '100%', 
+          maxWidth: '400px', 
+          marginBottom: '16px' 
+        }} 
+        size='m' 
+        theme='default' 
+        stack={[{ color: '#33ff3c', value: progress }]} 
       />
-
+      
+      <h3>{fullPoints} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
+      
+      <Button 
+        onClick={handleAddPoints} 
+        view="flat" 
+        pin='circle-circle' 
+        size="xs" 
+        style={{ 
+          height: 'auto', 
+          backgroundColor: '#1c181c', 
+          borderRadius: '50%', 
+          textAlign: 'center' 
+        }}
+      >
+        <img 
+          src={
+            currentLevel.ID === 1 || currentLevel.ID === null ? Level1Image :
+            currentLevel.ID === 2 ? Level2Image :
+            currentLevel.ID === 3 ? Level3Image :
+            currentLevel.ID === 4 ? Level4Image :
+            currentLevel.ID === 5 ? Level5Image :
+            currentLevel.ID === 6 ? Level6Image :
+            currentLevel.ID === 7 ? Level7Image :
+            currentLevel.ID === 8 ? Level8Image :
+            currentLevel.ID === 9 ? Level9Image :
+            currentLevel.ID === 10 ? Level10Image :
+            currentLevel.ID === 11 ? Level11Image :
+            currentLevel.ID === 12 ? Level12Image :
+            currentLevel.ID === 13 ? Level13Image :
+            currentLevel.ID === 14 ? Level14Image : 
+            Level15Image
+          } 
+          width="192px"
+        />
       </Button>
     </div>
+    
   );
 };
 
