@@ -65,5 +65,7 @@ func (c *LevelController) GetLevels(ctx *fiber.Ctx) error {
 		return err
 	}
 
+	c.Log.Debugf("GET LEVELS: %+v", "get")
+
 	return ctx.JSON(model.WebResponse[*[]model.LevelResponse]{Data: response})
 }

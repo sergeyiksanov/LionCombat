@@ -33,6 +33,8 @@ func (c *UserController) AddPointsToUser(ctx *fiber.Ctx) error {
 		return fiber.ErrBadRequest
 	}
 
+	c.Log.Debugf("USER ADD POINTS: %+v", request)
+
 	response, err := c.UseCase.AddPointsToUser(ctx.UserContext(), request)
 	if err != nil {
 		c.Log.Warnf("Failed add points to user : %+v", err)
@@ -55,6 +57,8 @@ func (c *UserController) Auth(ctx *fiber.Ctx) error {
 		c.Log.Warnf("Failed to parse request body : %+v", err)
 		return fiber.ErrBadRequest
 	}
+
+	c.Log.Debugf("USER AUTH: %+v", request)
 
 	response, err := c.UseCase.AuthUser(ctx.UserContext(), request)
 	if err != nil {

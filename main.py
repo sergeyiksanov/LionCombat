@@ -19,11 +19,14 @@ dp.message(CommandStart())
 @dp.message(CommandStart())
 async def command_start_handler(message: Message, bot: Bot) -> None:
 
-    await bot.set_chat_menu_button(
-        chat_id=message.chat.id,
-        menu_button=MenuButtonWebApp(text="Open", web_app=WebAppInfo(url="https://lioncombat.hopto.org/"))
-    )
-    await message.answer(text="Фестенг будет")
+    # await bot.set_chat_menu_button(
+    #     chat_id=message.chat.id,
+    #     menu_button=MenuButtonWebApp(text="Open", web_app=WebAppInfo(url="https://lioncombat.hopto.org/"))
+    # )
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Тапаем братья", web_app=WebAppInfo(url="https://lioncombat.hopto.org/"))]
+    ])
+    await message.answer("test", reply_markup=kb)
 
 
 async def main() -> None:

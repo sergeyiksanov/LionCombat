@@ -9,6 +9,8 @@ func UserToResponse(user *entity.User) *model.UserResponse {
 	return &model.UserResponse{
 		ID:          user.ID,
 		LevelID:     user.LevelID,
+		Username:    user.Username,
+		AvatarUrl:   user.AvatarUrl,
 		CountPoints: user.CountPoints,
 		CreatedAt:   user.CreatedAt,
 		UpdatedAt:   user.UpdatedAt,

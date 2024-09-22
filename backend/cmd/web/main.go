@@ -15,7 +15,7 @@ func main() {
 	app := config.NewFiber(viperConfig)
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "https://lioncombat.hopto.org/",    // Разрешенные источники
+		AllowOrigins: "https://lioncombat.hopto.org",     // Разрешенные источники
 		AllowMethods: "GET,POST,HEAD,PUT,DELETE,OPTIONS", // Разрешенные методы
 	}))
 	// app.Use(func(ctx *fiber.Ctx) error {

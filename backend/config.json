@@ -11,7 +11,7 @@
   },
   "database": {
     "username": "postgres",
-    "password": "lioncombat_fizmat",
+    "password": "admin",
     "host": "localhost",
     "port": 5432,
     "name": "lioncombat",

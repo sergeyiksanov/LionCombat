@@ -109,6 +109,8 @@ func (c *UserUseCase) AuthUser(ctx context.Context, request *model.AuthUserReque
 	tx := c.DB.WithContext(ctx).Begin()
 	defer tx.Rollback()
 
+	c.Log.Debugf("REQUEST: %+v", request)
+
 	if err := c.Validate.Struct(request); err != nil {
 		c.Log.Warnf("Invalid request body : %+v", err)
 		return nil, fiber.ErrBadRequest
@@ -137,6 +139,8 @@ func (c *UserUseCase) AuthUser(ctx context.Context, request *model.AuthUserReque
 
 	user := &entity.User{
 		ID:          request.ID,
+		Username:    request.Username,
+		AvatarUrl:   request.AvatarUrl,
 		LevelID:     1,
 		CountPoints: 0,
 	}
