@@ -4,6 +4,20 @@ import { Button, Progress, UserLabel, Loader } from '@gravity-ui/uikit';
 import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import Level1Image from './../images/level_1.png';
+import Level2Image from './../images/level_2.png';
+import Level3Image from './../images/level_3.png';
+import Level4Image from './../images/level_4.png';
+import Level5Image from './../images/level_5.png';
+import Level6Image from './../images/level_6.png';
+import Level7Image from './../images/level_7.png';
+import Level8Image from './../images/level_8.png';
+import Level9Image from './../images/level_9.png';
+import Level10Image from './../images/level_10.png';
+import Level11Image from './../images/level_11.png';
+import Level12Image from './../images/level_12.png';
+import Level13Image from './../images/level_13.png';
+import Level14Image from './../images/level_14.png';
+import Level15Image from './../images/level_15.png';
 
 const baseUrl = '/api/api';
 
@@ -121,7 +135,7 @@ const GameScreen = () => {
 
   return (
     <div className="game-screen" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px' }}>
-      <h1 style={{ width: '100%', textAlign: 'center' }}>Lion Combat</h1>
+      <h1 style={{ width: '100%', textAlign: 'center' }}>Lion Kombat</h1>
       <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>{user?.Username}</UserLabel>
       <Button style={{ marginBottom: '16px', width: '100%' }} onClick={() => navigate('/levels')} view='outlined' size='xl'>
         {currentLevel?.Name + " (" + currentLevel?.LevelNumber + ")"}
@@ -129,7 +143,23 @@ const GameScreen = () => {
       <Progress value={progress} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: progress }]} />
       <h3>{fullPoints} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
       <Button onClick={handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto', backgroundColor: '#1c181c', borderRadius: '50%' }}>
-        <img src={Level1Image} width="192px" />
+        <img src={() => {
+          if (currentLevel.ID == 1) return Level1Image;
+          else if (currentLevel.ID == 2) return Level2Image;
+          else if (currentLevel.ID == 3) return Level3Image;
+          else if (currentLevel.ID == 4) return Level4Image;
+          else if (currentLevel.ID == 5) return Level5Image;
+          else if (currentLevel.ID == 6) return Level6Image;
+          else if (currentLevel.ID == 7) return Level7Image;
+          else if (currentLevel.ID == 8) return Level8Image;
+          else if (currentLevel.ID == 9) return Level9Image;
+          else if (currentLevel.ID == 10) return Level10Image;
+          else if (currentLevel.ID == 11) return Level11Image;
+          else if (currentLevel.ID == 12) return Level12Image;
+          else if (currentLevel.ID == 13) return Level13Image;
+          else if (currentLevel.ID == 14) return Level14Image;
+          else return Level15Image;
+        }} width="192px" />
       </Button>
     </div>
   );
