@@ -97,7 +97,6 @@ const GameScreen = () => {
     setPointsToSend(pointsToSend + 1);
   };
 
-
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
