@@ -20,7 +20,7 @@ const RatingScreen = () => {
       console.log(JSON.parse(data).data);
       setRating(JSON.parse(data).data);
     })
-  });
+  }, [baseUrl]);
 
   const items = rating.map((user) => {
     console.log(user)
