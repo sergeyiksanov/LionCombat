@@ -35,7 +35,7 @@ const GameScreen = () => {
 
         const userData = await userResponse.json();
         setUser(userData.data);
-        setPoints(userData.data.CountPoints);
+        // setPoints(userData.data.CountPoints);
 
         const levelResponse = await fetch(baseUrl + "/level?id=" + String(userData.data.LevelID), {
           method: 'GET',
@@ -47,17 +47,17 @@ const GameScreen = () => {
 
         const levelData = await levelResponse.json();
         setLevel(levelData.data);
-        const nextLevelResponse = await fetch(baseUrl + "/level?id=" + String(userData.data.LevelID + 1), {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': true
-          },
-        });
-        const nextLevelData = await nextLevelResponse.json();
-        if (nextLevelData.data.NeedPoints !== null) {
-          setNextLevel(nextLevelData.data);
-        }
+        // const nextLevelResponse = await fetch(baseUrl + "/level?id=" + String(userData.data.LevelID + 1), {
+        //   method: 'GET',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'ngrok-skip-browser-warning': true
+        //   },
+        // });
+        // const nextLevelData = await nextLevelResponse.json();
+        // if (nextLevelData.data.NeedPoints !== null) {
+        //   setNextLevel(nextLevelData.data);
+        // }
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -94,7 +94,7 @@ const GameScreen = () => {
       <Progress value={progress} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: progress }]} />
       <h3>{points}</h3>
       <Button onClick={() => {
-        setPoints(points + 1);
+        // setPoints(points + 1);
         setPointsToSend(pointsToSend + 1);
       }} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
