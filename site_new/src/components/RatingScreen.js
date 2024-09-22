@@ -1,4 +1,9 @@
 import { User } from "@gravity-ui/uikit";
+import '@gravity-ui/uikit/styles/fonts.css';
+import '@gravity-ui/uikit/styles/styles.css';
+import ButtonImage from './../images/button-image.png';
+import LockImage from './../images/Lock@3x.svg';
+import { useState } from 'react';
 
 const users = [
     { username: 'Player1', points: 150, level: '1' },
