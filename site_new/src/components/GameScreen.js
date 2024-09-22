@@ -116,7 +116,7 @@ const GameScreen = () => {
       <Button style={{ marginBottom: '16px', width: '100%' }} onClick={() => navigate('/levels')} view='outlined' size='xl'>
         {currentLevel?.Name + " (" + currentLevel?.LevelNumber + ")"}
       </Button>
-      <Progress value={points} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: points }]} />
+      <Progress value={initialPoints + pointsToSend} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: initialPoints + pointsToSend }]} />
       <h3>{points}</h3>
       <Button onClick={() => handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
