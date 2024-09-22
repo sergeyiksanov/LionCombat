@@ -112,7 +112,7 @@ const GameScreen = () => {
         {levels.find(level => level.ID === levels.find(level => level.NeedPoints > initialPoints + pointsToSend).ID)?.Name + " (" + levels.find(level => level.ID === levels.find(level => level.NeedPoints > initialPoints + pointsToSend).ID)?.LevelNumber + ")"}
       </Button>
       <Progress value={progress} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: progress }]} />
-      <h3>{initialPoints + pointsToSend} / {levels.find(level => level.ID === user.LevelID + 1).NeedPoints}</h3>
+      <h3>{initialPoints + pointsToSend} / {levels.find(level => level.ID === user?.LevelID + 1)?.NeedPoints}</h3>
       <Button onClick={handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
       </Button>
