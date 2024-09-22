@@ -66,7 +66,7 @@ const GameScreen = () => {
     const handleUnload = async () => {
       console.log("SEND POINTS");
       if (pointsToSend > 0) {
-        await fetch(baseUrl + /users/add_points, {
+        await fetch(baseUrl + "/users/add_points", {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
