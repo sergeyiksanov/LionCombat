@@ -107,7 +107,7 @@ const GameScreen = () => {
     );
   }
 
-  const progress = points;
+  const progress = initialPoints + pointsToSend;
 
   return (
     <div className="game-screen" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px' }}>
@@ -117,7 +117,7 @@ const GameScreen = () => {
         {currentLevel?.Name + " (" + currentLevel?.LevelNumber + ")"}
       </Button>
       <Progress value={initialPoints + pointsToSend} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: initialPoints + pointsToSend }]} />
-      <h3>{points}</h3>
+      <h3>{initialPoints + pointsToSend}</h3>
       <Button onClick={() => handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
       </Button>
