@@ -39,7 +39,7 @@ const GameScreen = () => {
 
         const userData = await userResponse.json();
         setUser(userData.data);
-        setPoints(userData.data.CountPoints);
+        // setPoints(userData.data.CountPoints);
 
         // Получаем список всех уровней
         const levelsResponse = await fetch(baseUrl + "/levels", {
