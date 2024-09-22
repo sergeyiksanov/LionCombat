@@ -63,26 +63,11 @@ const GameScreen = () => {
 
     fetchData();
 
-    // Обработчик закрытия вкладки или перезагрузки страницы
-    const handleUnload = async () => {
-      console.log("SEND POINTS");
-      if (pointsToSend > 0) {
-        await fetch(baseUrl + "/users/add_points", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': true
-          },
-          body: JSON.stringify({ id: idForTest, add_count_points: pointsToSend }) // Отправляем накопленные очки
-        });
-      }
-    };
-
-    window.addEventListener('beforeunload', handleUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleUnload);
-    };
+    const interval = setInterval(() => {
+      console.log('This will be called every 2 seconds');
+    }, 2000);
+  
+    return () => clearInterval(interval);
   }, [idForTest, usernameForTest, pointsToSend]);
 
   // Второй useEffect для обновления уровня при изменении очков
