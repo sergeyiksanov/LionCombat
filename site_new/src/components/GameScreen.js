@@ -8,8 +8,11 @@ import ButtonImage from './../images/button-image.png';
 const baseUrl = 'https://5d23-176-59-18-45.ngrok-free.app/api';
 
 const GameScreen = () => {
-  const WebApp = window.Telegram.WebApp;
-  const initDataUnsafe = WebApp.initDataUnsafe.user;
+  // const WebApp = window.Telegram.WebApp;
+  // const initDataUnsafe = WebApp.initDataUnsafe.user;
+
+  const idForTest = '6228723943';
+  const usernameForTest = 'sergeyiksanov';
 
   const [user, setUser] = useState(null);
   const [levels, setLevels] = useState([]);
@@ -30,7 +33,8 @@ const GameScreen = () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: String(initDataUnsafe.id), username: initDataUnsafe.username })
+          // body: JSON.stringify({ id: String(initDataUnsafe.id), username: initDataUnsafe.username }),
+          body: JSON.stringify({ id: idForTest, username: usernameForTest })
         });
 
         const userData = await userResponse.json();
@@ -71,7 +75,7 @@ const GameScreen = () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: initDataUnsafe.id, add_count_points: pointsToSend }) // Отправляем накопленные очки
+          body: JSON.stringify({ id: idForTest, add_count_points: pointsToSend }) // Отправляем накопленные очки
         });
       }
     };
@@ -81,7 +85,7 @@ const GameScreen = () => {
     return () => {
       window.removeEventListener('beforeunload', handleUnload);
     };
-  }, [initDataUnsafe.id, initDataUnsafe.username, pointsToSend]);
+  }, [idForTest, usernameForTest, pointsToSend]);
 
   const handleAddPoints = () => {
     const newPoints = points + 1;
