@@ -84,6 +84,7 @@ const GameScreen = () => {
   const timeoutRef = useRef(null);
 
   useEffect(() => {
+    console.log("TIMER");
     if (pointsToSend > 0) {
       timeoutRef.current = setTimeout(async () => {
         console.log("SEND POINTS");
