@@ -110,7 +110,7 @@ const GameScreen = () => {
           },
           body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend + initialPoints })
         });
-      }, 500)
+      }, 1000)
     }
   });
 
