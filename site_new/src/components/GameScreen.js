@@ -143,23 +143,28 @@ const GameScreen = () => {
       <Progress value={progress} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: progress }]} />
       <h3>{fullPoints} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
       <Button onClick={handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto', backgroundColor: '#1c181c', borderRadius: '50%' }}>
-        <img src={() => {
-          if (currentLevel.ID == 1 || currentLevel.ID == null) return Level1Image;
-          // else if (currentLevel.ID == 2) return Level2Image;
-          // else if (currentLevel.ID == 3) return Level3Image;
-          // else if (currentLevel.ID == 4) return Level4Image;
-          // else if (currentLevel.ID == 5) return Level5Image;
-          // else if (currentLevel.ID == 6) return Level6Image;
-          // else if (currentLevel.ID == 7) return Level7Image;
-          // else if (currentLevel.ID == 8) return Level8Image;
-          // else if (currentLevel.ID == 9) return Level9Image;
-          // else if (currentLevel.ID == 10) return Level10Image;
-          // else if (currentLevel.ID == 11) return Level11Image;
-          // else if (currentLevel.ID == 12) return Level12Image;
-          // else if (currentLevel.ID == 13) return Level13Image;
-          // else if (currentLevel.ID == 14) return Level14Image;
-          else return Level15Image;
-        }} width="192px" />
+      <img 
+        src={
+          currentLevel.ID === 1 || currentLevel.ID === null ? Level1Image :
+          currentLevel.ID === 2 ? Level2Image :
+          currentLevel.ID === 3 ? Level3Image :
+          currentLevel.ID === 4 ? Level4Image :
+          currentLevel.ID === 5 ? Level5Image :
+          currentLevel.ID === 6 ? Level6Image :
+          currentLevel.ID === 7 ? Level7Image :
+          currentLevel.ID === 8 ? Level8Image :
+          currentLevel.ID === 9 ? Level9Image :
+          currentLevel.ID === 10 ? Level10Image :
+          currentLevel.ID === 11 ? Level11Image :
+          currentLevel.ID === 12 ? Level12Image :
+          currentLevel.ID === 13 ? Level13Image :
+          currentLevel.ID === 14 ? Level14Image : 
+          Level15Image
+        } 
+        width="192px" 
+        alt={`Level ${currentLevel.ID}`}
+      />
+
       </Button>
     </div>
   );
