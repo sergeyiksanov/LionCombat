@@ -58,8 +58,6 @@ const LevelsScreen = () => {
         setLevels(levelsData.data);
       } catch (error) {
         console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -108,13 +106,13 @@ const LevelsScreen = () => {
     }
   });
 
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Loader size="l" style={{color: '#33ff3c'}} />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+  //       <Loader size="l" style={{color: '#33ff3c'}} />
+  //     </div>
+  //   );
+  // }
   
   return (
     <div className="levels-screen">
