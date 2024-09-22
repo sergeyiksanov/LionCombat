@@ -2,7 +2,7 @@ import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import ButtonImage from './../images/level_1.png';
 import LockImage from './../images/Lock@3x.svg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const baseUrl = '/api/api'
   
@@ -47,7 +47,7 @@ const LevelsScreen = () => {
 
     fetchData();
 
-  }, [idForTest, usernameForTest, pointsToSend]);
+  }, [idForTest, usernameForTest]);
 
   const items = levels.map((level) => {
     console.log(level)
