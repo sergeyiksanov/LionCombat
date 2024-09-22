@@ -24,7 +24,6 @@ const baseUrl = '/api/api'
 const LevelsScreen = () => {
   const [user, setUser] = useState(null);
   const [levels, setLevels] = useState([]);
-  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const webApp = window.Telegram.WebApp;
@@ -40,7 +39,7 @@ const LevelsScreen = () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: "6228723943", username: "sergeyiksanov" })
+          body: JSON.stringify({ id: userDataTg.id, username: userDataTg.username })
         });
 
         const userData = await userResponse.json();
@@ -57,48 +56,6 @@ const LevelsScreen = () => {
 
         const levelsData = await levelsResponse.json();
         setLevels(levelsData.data);
-        
-        setItems(levelsData.data.map((level) => {
-          console.log(level)
-          if (level.ID <= user.LevelID) {
-            return (
-              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '16px', marginBottom: '16px', border: '2px solid #33ff3c', padding: '16px', borderRadius: '16px'}}>
-                <img src={
-                level.ID === 1 || level.ID === null ? Level1Image :
-                level.ID === 2 ? Level2Image :
-                level.ID === 3 ? Level3Image :
-                level.ID === 4 ? Level4Image :
-                level.ID === 5 ? Level5Image :
-                level.ID === 6 ? Level6Image :
-                level.ID === 7 ? Level7Image :
-                level.ID === 8 ? Level8Image :
-                level.ID === 9 ? Level9Image :
-                level.ID === 10 ? Level10Image :
-                level.ID === 11 ? Level11Image :
-                level.ID === 12 ? Level12Image :
-                level.ID === 13 ? Level13Image :
-                level.ID === 14 ? Level14Image : 
-                Level15Image
-              } width={'100px'} style={{marginRight: '16px'}}/>
-                <div>
-                  <p style={{fontWeight: 'bold'}}>{level.Name}</p>
-                  <p>Необходимо: {level.NeedPoints}</p>
-                </div>
-              </div>
-            );
-          } else {
-            return (
-              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '16px', marginBottom: '16px', padding: '16px', borderRadius: '16px', background: '#393439'}}>
-                <img src={LockImage} width={'100px'} style={{marginRight: '16px'}}/>
-                <div>
-                  <p style={{fontWeight: 'bold'}}>{level.Name}</p>
-                  <p>Необходимо: {level.NeedPoints}</p>
-                </div>
-              </div>
-            );
-          }
-        }));
-
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -107,8 +64,50 @@ const LevelsScreen = () => {
     };
 
     fetchData();
-  }, [userDataTg.id, userDataTg.username]);
-  
+
+  }, [userDataTg.id, userDataTg.username, levels]);
+
+  const items = levels.map((level) => {
+    console.log(level)
+    if (level.ID <= user.LevelID) {
+      return (
+        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '16px', marginBottom: '16px', border: '2px solid #33ff3c', padding: '16px', borderRadius: '16px'}}>
+          <img src={
+          level.ID === 1 || level.ID === null ? Level1Image :
+          level.ID === 2 ? Level2Image :
+          level.ID === 3 ? Level3Image :
+          level.ID === 4 ? Level4Image :
+          level.ID === 5 ? Level5Image :
+          level.ID === 6 ? Level6Image :
+          level.ID === 7 ? Level7Image :
+          level.ID === 8 ? Level8Image :
+          level.ID === 9 ? Level9Image :
+          level.ID === 10 ? Level10Image :
+          level.ID === 11 ? Level11Image :
+          level.ID === 12 ? Level12Image :
+          level.ID === 13 ? Level13Image :
+          level.ID === 14 ? Level14Image : 
+          Level15Image
+        } width={'100px'} style={{marginRight: '16px'}}/>
+          <div>
+            <p style={{fontWeight: 'bold'}}>{level.Name}</p>
+            <p>Необходимо: {level.NeedPoints}</p>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '16px', marginBottom: '16px', padding: '16px', borderRadius: '16px', background: '#393439'}}>
+          <img src={LockImage} width={'100px'} style={{marginRight: '16px'}}/>
+          <div>
+            <p style={{fontWeight: 'bold'}}>{level.Name}</p>
+            <p>Необходимо: {level.NeedPoints}</p>
+          </div>
+        </div>
+      );
+    }
+  });
+
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -116,7 +115,7 @@ const LevelsScreen = () => {
       </div>
     );
   }
-
+  
   return (
     <div className="levels-screen">
       {items}
@@ -125,3 +124,4 @@ const LevelsScreen = () => {
 };
   
 export default LevelsScreen;
+  
