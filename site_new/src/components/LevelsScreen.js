@@ -1,6 +1,6 @@
 import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
-import ButtonImage from './../images/button-image.png';
+import ButtonImage from './../images/level_1.png';
 import LockImage from './../images/Lock@3x.svg';
 import { useState } from 'react';
 
