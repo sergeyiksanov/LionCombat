@@ -8,8 +8,8 @@ const users = [
   
   const RatingScreen = () => {
     
-    const items = levels.map((level) => {
-      console.log(level)
+    const items = users.map((user) => {
+      console.log(user);
       return (
         <User>Юзернейм: {user.username} | Своишки: {user.points} | Уровень: {user.level}</User>
       );
