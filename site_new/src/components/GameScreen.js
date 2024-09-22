@@ -102,7 +102,7 @@ const GameScreen = () => {
     );
   }
 
-  const progress = ((initialPoints + pointsToSend) / levels.find(level => level.ID === currentLevel.LevelID + 1).NeedPoints) * 100;
+  const progress = ((initialPoints + pointsToSend) );
 
   return (
     <div className="game-screen" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px' }}>
