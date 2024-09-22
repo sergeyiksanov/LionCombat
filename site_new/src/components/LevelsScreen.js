@@ -65,7 +65,7 @@ const LevelsScreen = () => {
 
     fetchData();
 
-  }, [userDataTg.id, userDataTg.username, levels]);
+  }, [userDataTg.id, userDataTg.username]);
 
   if (loading) {
     return (
