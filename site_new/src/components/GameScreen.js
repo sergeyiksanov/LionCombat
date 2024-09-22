@@ -13,6 +13,7 @@ const GameScreen = () => {
 
   const [user, setUser] = useState(null); // Делаем начальное значение null
   const [level, setLevel] = useState("");
+  const [nextLevel, setNextLevel] = useState("");
   const [points, setPoints] = useState(0);
   const [pointsToSend, setPointsToSend] = useState(0);
   const [loading, setLoading] = useState(true); // Лоадер
@@ -53,6 +54,17 @@ const GameScreen = () => {
             });
             const levelData = await levelResponse.json();
             setLevel(levelData.data);
+            const nextLevelResponse = await fetch(baseUrl + "/level?id=" + String(userData.data.LevelID + 1), {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': true
+              },
+            });
+            const nextLevelData = await nextLevelResponse.json();
+            if (nextLevel.data.NeedPoints !== null) {
+              setNextLevel(nextLevelData.data);
+            }
           }
   
           setPointsToSend(0); // Сбрасываем количество отправленных очков
@@ -87,6 +99,17 @@ const GameScreen = () => {
 
         const levelData = await levelResponse.json();
         setLevel(levelData.data);
+        const nextLevelResponse = await fetch(baseUrl + "/level?id=" + String(userData.data.LevelID + 1), {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': true
+          },
+        });
+        const nextLevelData = await nextLevelResponse.json();
+        if (nextLevel.data.NeedPoints !== null) {
+          setNextLevel(nextLevelData.data);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -120,7 +143,7 @@ const GameScreen = () => {
     );
   }
 
-  const progress = points;
+  const progress = points / nextLevel.NeedPoints;
 
   return (
     <div className="game-screen" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px' }}>
