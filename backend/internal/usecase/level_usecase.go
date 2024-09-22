@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"sort"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
@@ -66,6 +67,10 @@ func (c *LevelUseCase) GetLevels(ctx context.Context) (*[]model.LevelResponse, e
 	for i, address := range levels {
 		responses[i] = *converter.LevelToResponse(&address)
 	}
+
+	sort.Slice(responses, func(i, j int) bool {
+		return responses[i].ID < responses[j].ID
+	})
 
 	return &responses, nil
 }
