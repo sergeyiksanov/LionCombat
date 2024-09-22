@@ -25,7 +25,7 @@ const RatingScreen = () => {
   const items = rating.map((user) => {
     console.log(user)
     return (
-      <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>Юзернейм: {user.Username} | Своишки: {user.Points} | Уровень: {user.LevelID}</UserLabel>
+      <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>Юзернейм: {user.UserName} | Своишки: {user.CountPoints} | Уровень: {user.LevelID}</UserLabel>
     );
   });
   
