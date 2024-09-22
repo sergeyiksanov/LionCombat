@@ -17,7 +17,7 @@ const GameScreen = () => {
   const [user, setUser] = useState(null);
   const [levels, setLevels] = useState([]);
   const [currentLevel, setCurrentLevel] = useState(null);
-  const [points, setPoints] = useState(0);
+  const [initialPoints, setInitialPoints] = useState(0);
   const [pointsToSend, setPointsToSend] = useState(0); // Накопленные очки
   const [loading, setLoading] = useState(true);
 
@@ -39,7 +39,7 @@ const GameScreen = () => {
 
         const userData = await userResponse.json();
         setUser(userData.data);
-        // setPoints(userData.data.CountPoints);
+        setInitialPoints(userData.data.CountPoints);
 
         // Получаем список всех уровней
         const levelsResponse = await fetch(baseUrl + "/levels", {
@@ -89,13 +89,12 @@ const GameScreen = () => {
   }, [idForTest, usernameForTest, pointsToSend]);
 
   const handleAddPoints = () => {
-    if (points + 1 >= currentLevel.NeedPoints) {
+    if (initialPoints + pointsToSend + 1 >= currentLevel.NeedPoints) {
       const nextLevel = levels.find(level => level.LevelNumber === currentLevel.LevelNumber + 1);
       if (nextLevel) {
         setCurrentLevel(nextLevel); // Обновляем уровень только в интерфейсе
       }
-    } 
-    setPoints(points + 1);
+    }
     setPointsToSend(pointsToSend + 1);
   };
 
@@ -119,7 +118,7 @@ const GameScreen = () => {
       </Button>
       <Progress value={points} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: points }]} />
       <h3>{points}</h3>
-      <Button onClick={() => setPoints(points + 1)} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
+      <Button onClick={() => handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
       </Button>
     </div>
