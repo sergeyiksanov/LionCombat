@@ -1,4 +1,4 @@
-import { User } from "@gravity-ui/uikit";
+import { UserLabel } from "@gravity-ui/uikit";
 import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import { useEffect, useState } from 'react';
@@ -20,12 +20,12 @@ const RatingScreen = () => {
       console.log(JSON.parse(data).data);
       setRating(JSON.parse(data).data);
     })
-  });
+  }, [rating]);
 
   const items = rating.map((user) => {
     console.log(user)
     return (
-      <User>Юзернейм: {user.Username}</User>
+      <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>Юзернейм: {user.Username} | Своишки: {user.Points} | Уровень: {user.LevelID}</UserLabel>
     );
   });
   
