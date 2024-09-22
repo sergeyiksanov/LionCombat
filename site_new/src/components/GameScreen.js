@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'; // Добавляем useEffect
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Progress, UserLabel, Loader } from '@gravity-ui/uikit'; // Добавляем Loader
+import { Button, Progress, UserLabel, Loader } from '@gravity-ui/uikit';
 import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import ButtonImage from './../images/button-image.png';
@@ -11,19 +11,19 @@ const GameScreen = () => {
   const WebApp = window.Telegram.WebApp;
   const initDataUnsafe = WebApp.initDataUnsafe.user;
 
-  const [user, setUser] = useState(null); // Делаем начальное значение null
-  const [level, setLevel] = useState("");
-  const [nextLevel, setNextLevel] = useState("");
+  const [user, setUser] = useState(null);
+  const [levels, setLevels] = useState([]);
+  const [currentLevel, setCurrentLevel] = useState(null);
   const [points, setPoints] = useState(0);
-  const [pointsToSend, setPointsToSend] = useState(0);
-  const [loading, setLoading] = useState(true); // Лоадер
+  const [pointsToSend, setPointsToSend] = useState(0); // Накопленные очки
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
+        // Получаем информацию о пользователе
         const userResponse = await fetch(baseUrl + "/users/auth", {
           method: 'POST',
           headers: {
@@ -35,9 +35,10 @@ const GameScreen = () => {
 
         const userData = await userResponse.json();
         setUser(userData.data);
-        // setPoints(userData.data.CountPoints);
+        setPoints(userData.data.CountPoints);
 
-        const levelResponse = await fetch(baseUrl + "/level?id=" + String(userData.data.LevelID), {
+        // Получаем список всех уровней
+        const levelsResponse = await fetch(baseUrl + "/levels", {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -45,19 +46,13 @@ const GameScreen = () => {
           },
         });
 
-        const levelData = await levelResponse.json();
-        setLevel(levelData.data);
-        // const nextLevelResponse = await fetch(baseUrl + "/level?id=" + String(userData.data.LevelID + 1), {
-        //   method: 'GET',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     'ngrok-skip-browser-warning': true
-        //   },
-        // });
-        // const nextLevelData = await nextLevelResponse.json();
-        // if (nextLevelData.data.NeedPoints !== null) {
-        //   setNextLevel(nextLevelData.data);
-        // }
+        const levelsData = await levelsResponse.json();
+        setLevels(levelsData.data);
+
+        // Устанавливаем текущий уровень
+        const currentLvl = levelsData.data.find(level => level.ID === userData.data.LevelID);
+        setCurrentLevel(currentLvl);
+
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -67,61 +62,63 @@ const GameScreen = () => {
 
     fetchData();
 
-    const sendPoints = async () => {
-      try {
-        const sendPointResponse = await fetch(baseUrl + "/users/add_points", {
+    // Обработчик закрытия вкладки или перезагрузки страницы
+    const handleUnload = async () => {
+      if (pointsToSend > 0) {
+        await fetch(baseUrl + `/users/add_points`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: String(initDataUnsafe.id), add_count_points: pointsToSend }),
+          body: JSON.stringify({ id: initDataUnsafe.id, add_count_points: pointsToSend }) // Отправляем накопленные очки
         });
+      }
+    };
 
-        const newUserData = await sendPointResponse.json();
-        setUser(newUserData.data);
-        setPoints(newUserData.CountPoints);
-      } catch(error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
+    window.addEventListener('beforeunload', handleUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleUnload);
+    };
+  }, [initDataUnsafe.id, initDataUnsafe.username, pointsToSend]);
+
+  const handleAddPoints = () => {
+    const newPoints = points + 1;
+    setPoints(newPoints);
+    setPointsToSend(pointsToSend + 1);
+
+    // Проверяем, нужно ли обновить уровень в интерфейсе
+    if (newPoints >= currentLevel.NeedPoints) {
+      const nextLevel = levels.find(level => level.LevelNumber === currentLevel.LevelNumber + 1);
+      if (nextLevel) {
+        setCurrentLevel(nextLevel); // Обновляем уровень только в интерфейсе
       }
     }
+  };
 
-    const interval = setInterval(() => {
-      sendPoints();
-    }, 3000);
-
-    return () => clearInterval(interval);
-  })
-    
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Loader size="l" style={{color: '#33ff3c'}}/>
+        <Loader size="l" style={{color: '#33ff3c'}} />
       </div>
     );
   }
 
-  const progress = points;
+  const progress = (points / currentLevel.NeedPoints) * 100;
 
   return (
     <div className="game-screen" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px' }}>
       <h1 style={{ width: '100%', textAlign: 'center' }}>Lion Combat</h1>
       <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>{user.Username}</UserLabel>
       <Button style={{ marginBottom: '16px', width: '100%' }} onClick={() => navigate('/levels')} view='outlined' size='xl'>
-        {level.Name + " (" + level.LevelNumber + ")"}
+        {currentLevel.Name + " (" + currentLevel.LevelNumber + ")"}
       </Button>
       <Progress value={progress} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: progress }]} />
-      <h3>{points}</h3>
-      <Button onClick={() => {
-        // setPoints(points + 1);
-        setPointsToSend(pointsToSend + 1);
-      }} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
+      <h3>{points} / {currentLevel.NeedPoints}</h3>
+      <Button onClick={handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
       </Button>
     </div>
   );
 };
-
-export default GameScreen;
