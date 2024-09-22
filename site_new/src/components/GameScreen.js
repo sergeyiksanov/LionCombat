@@ -63,11 +63,6 @@ const GameScreen = () => {
 
     fetchData();
 
-    const interval = setInterval(() => {
-      console.log('This will be called every 2 seconds');
-    }, 2000);
-  
-    return () => clearInterval(interval);
   }, [idForTest, usernameForTest, pointsToSend]);
 
   // Второй useEffect для обновления уровня при изменении очков
@@ -80,6 +75,14 @@ const GameScreen = () => {
       }
     }
   }, [pointsToSend, currentLevel, initialPoints, levels]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log('This will be called every 2 seconds');
+    }, 2000);
+  
+    return () => clearInterval(interval);
+  })
 
   const handleAddPoints = () => {
     setPointsToSend(pointsToSend + 1);
