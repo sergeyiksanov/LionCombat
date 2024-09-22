@@ -96,7 +96,7 @@ const GameScreen = () => {
           setPointsToSend(0);
         })
       }
-    }, 100);
+    }, 1);
   
     return () => clearInterval(interval);
   })
