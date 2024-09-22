@@ -128,7 +128,7 @@ const GameScreen = () => {
       </Button>
       <Progress value={progress} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: progress }]} />
       <h3>{fullPoints} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
-      <Button onClick={handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto', backgroundColor: '#33ff3c', borderRadius: '50%' }}>
+      <Button onClick={handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto', backgroundColor: '#1c181c', borderRadius: '50%' }}>
         <img src={Level1Image} width="192px" />
       </Button>
     </div>
