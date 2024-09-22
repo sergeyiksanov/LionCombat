@@ -1,4 +1,4 @@
-import { UserLabel } from "@gravity-ui/uikit";
+import { UserLabel, Loader } from "@gravity-ui/uikit";
 import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import { useEffect, useState } from 'react';
@@ -7,20 +7,35 @@ const baseUrl = '/api/api'
 
 const RatingScreen = () => {
   const [rating, setRating] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(baseUrl + "/rating", {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': true
-      }
-    }).then(response => response.text())
-    .then(data => {
-      console.log(JSON.parse(data).data);
-      setRating(JSON.parse(data).data);
-    })
+    try {
+      fetch(baseUrl + "/rating", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': true
+        }
+      }).then(response => response.text())
+      .then(data => {
+        console.log(JSON.parse(data).data);
+        setRating(JSON.parse(data).data);
+      })
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
   }, [baseUrl]);
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Loader size="l" style={{color: '#33ff3c'}} />
+      </div>
+    );
+  }
 
   const items = rating.map((user) => {
     console.log(user)

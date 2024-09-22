@@ -17,7 +17,7 @@ import Level14Image from './../images/level_14.png';
 import Level15Image from './../images/level_15.png';
 import LockImage from './../images/Lock@3x.svg';
 import { useState, useEffect } from 'react';
-import { Button, Progress, UserLabel, Loader } from '@gravity-ui/uikit';
+import { Loader } from '@gravity-ui/uikit';
 
 const baseUrl = '/api/api'
   
