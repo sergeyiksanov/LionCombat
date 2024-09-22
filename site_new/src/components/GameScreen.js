@@ -5,7 +5,7 @@ import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import ButtonImage from './../images/button-image.png';
 
-const baseUrl = 'http://localhost:3001/api';
+const baseUrl = 'http://lioncombat.hopto.org:3001/api';
 
 const GameScreen = () => {
   // const WebApp = window.Telegram.WebApp;
