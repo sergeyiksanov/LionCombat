@@ -79,6 +79,17 @@ const GameScreen = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       console.log('This will be called every 2 seconds');
+      if (pointsToSend > 0) {
+        fetch(baseUrl + "/users/add_points", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': true
+          },
+          body: JSON.stringify({ id: idForTest, add_count_points: pointsToSend })
+        })
+        setPointsToSend(0)
+      }
     }, 2000);
   
     return () => clearInterval(interval);
