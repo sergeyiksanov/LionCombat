@@ -27,7 +27,7 @@ const RatingScreen = () => {
     return (
       <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>Юзернейм: {user.Username} | Своишки: {user.CountPoints} | Уровень: {user.LevelID}</UserLabel>
     );
-  });
+  }, [baseUrl]);
   
   return (
     <div className="rating-screen">
