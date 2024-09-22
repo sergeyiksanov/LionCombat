@@ -5,7 +5,7 @@ import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import ButtonImage from './../images/button-image.png';
 
-const baseUrl = '/api';
+const baseUrl = '/api/api';
 
 const GameScreen = () => {
   // const WebApp = window.Telegram.WebApp;
