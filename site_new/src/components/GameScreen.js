@@ -68,6 +68,7 @@ const GameScreen = () => {
 
     // Обработчик закрытия вкладки или перезагрузки страницы
     const handleUnload = async () => {
+      console.log("SEND POINTS");
       if (pointsToSend > 0) {
         await fetch(baseUrl + `/users/add_points`, {
           method: 'POST',
@@ -88,18 +89,22 @@ const GameScreen = () => {
   }, [idForTest, usernameForTest, pointsToSend]);
 
   const handleAddPoints = () => {
-    const newPoints = points + 1;
-    setPoints(newPoints);
-    setPointsToSend(pointsToSend + 1);
+    // Используем функцию обновления на основе предыдущего состояния
+    setPoints(prevPoints => {
+      const newPoints = prevPoints + 1;
+      setPointsToSend(prevPointsToSend => prevPointsToSend + 1);
 
-    // Проверяем, нужно ли обновить уровень в интерфейсе
-    if (newPoints >= currentLevel.NeedPoints) {
-      const nextLevel = levels.find(level => level.LevelNumber === currentLevel.LevelNumber + 1);
-      if (nextLevel) {
-        setCurrentLevel(nextLevel); // Обновляем уровень только в интерфейсе
+      // Проверяем, нужно ли обновить уровень в интерфейсе
+      if (newPoints >= currentLevel.NeedPoints) {
+        const nextLevel = levels.find(level => level.LevelNumber === currentLevel.LevelNumber + 1);
+        if (nextLevel) {
+          setCurrentLevel(nextLevel); // Обновляем уровень только в интерфейсе
+        }
       }
-    }
+      return newPoints;
+    });
   };
+
 
   if (loading) {
     return (
@@ -118,7 +123,7 @@ const GameScreen = () => {
       <Button style={{ marginBottom: '16px', width: '100%' }} onClick={() => navigate('/levels')} view='outlined' size='xl'>
         {currentLevel?.Name + " (" + currentLevel?.LevelNumber + ")"}
       </Button>
-      <Progress value={progress} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: progress }]} />
+      <Progress value={points} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: points }]} />
       <h3>{points}</h3>
       <Button onClick={handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
