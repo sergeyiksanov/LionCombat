@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // Добавляем useEffect
+import React, { useState, useEffect, useRef } from 'react'; // Добавляем useEffect
 import { useNavigate } from 'react-router-dom';
 import { Button, Progress, UserLabel, Loader } from '@gravity-ui/uikit'; // Добавляем Loader
 import '@gravity-ui/uikit/styles/fonts.css';
