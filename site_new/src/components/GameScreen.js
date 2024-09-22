@@ -62,7 +62,7 @@ const GameScreen = () => {
               },
             });
             const nextLevelData = await nextLevelResponse.json();
-            if (nextLevel.data.NeedPoints !== null) {
+            if (nextLevelData.data.NeedPoints !== null) {
               setNextLevel(nextLevelData.data);
             }
           }
@@ -107,7 +107,7 @@ const GameScreen = () => {
           },
         });
         const nextLevelData = await nextLevelResponse.json();
-        if (nextLevel.data.NeedPoints !== null) {
+        if (nextLevelData.data.NeedPoints !== null) {
           setNextLevel(nextLevelData.data);
         }
       } catch (error) {
@@ -156,7 +156,7 @@ const GameScreen = () => {
       <h3>{points}</h3>
       <Button onClick={() => {
         setPoints(points + 1);
-        setPointsToSend(points + 1);
+        setPointsToSend(pointsToSend + 1);
       }} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
       </Button>
