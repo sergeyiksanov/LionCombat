@@ -114,9 +114,9 @@ const GameScreen = () => {
   return (
     <div className="game-screen" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px' }}>
       <h1 style={{ width: '100%', textAlign: 'center' }}>Lion Combat</h1>
-      <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>{user.Username}</UserLabel>
+      <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>{user?.Username}</UserLabel>
       <Button style={{ marginBottom: '16px', width: '100%' }} onClick={() => navigate('/levels')} view='outlined' size='xl'>
-        {currentLevel.Name + " (" + currentLevel.LevelNumber + ")"}
+        {currentLevel?.Name + " (" + currentLevel?.LevelNumber + ")"}
       </Button>
       <Progress value={progress} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: progress }]} />
       <h3>{points} / {currentLevel.NeedPoints}</h3>
