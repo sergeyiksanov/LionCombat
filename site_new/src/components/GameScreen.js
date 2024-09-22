@@ -86,7 +86,7 @@ const GameScreen = () => {
     return () => {
       window.removeEventListener('beforeunload', handleUnload);
     };
-  }, [idForTest, usernameForTest, pointsToSend, currentLevel]);
+  }, [idForTest, usernameForTest, pointsToSend]);
 
   const handleAddPoints = () => {
     console.log("ADD POINTS")
@@ -102,14 +102,14 @@ const GameScreen = () => {
     );
   }
 
-  const progress = ((initialPoints + pointsToSend) );
+  const progress = ((initialPoints + pointsToSend) / levels.find(level => level.ID === 1 + levels.find(level => level.NeedPoints > initialPoints + pointsToSend).ID)?.NeedPoints) * 100;
 
   return (
     <div className="game-screen" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px' }}>
       <h1 style={{ width: '100%', textAlign: 'center' }}>Lion Combat</h1>
       <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>{user?.Username}</UserLabel>
       <Button style={{ marginBottom: '16px', width: '100%' }} onClick={() => navigate('/levels')} view='outlined' size='xl'>
-        {currentLevel?.Name + " (" + currentLevel?.LevelNumber + ")"}
+        {levels.find(level => level.ID === levels.find(level => level.NeedPoints > initialPoints + pointsToSend).ID)?.Name + " (" + levels.find(level => level.ID === levels.find(level => level.NeedPoints > initialPoints + pointsToSend).ID)?.LevelNumber + ")"}
       </Button>
       <Progress value={progress} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: progress }]} />
       <h3>{initialPoints + pointsToSend} / {levels.find(level => level.ID === user.LevelID + 1).NeedPoints}</h3>
