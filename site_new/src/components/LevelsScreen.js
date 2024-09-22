@@ -37,7 +37,7 @@ const LevelsScreen = () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: userDataTg.id, username: userDataTg.username })
+          body: JSON.stringify({ id: String(userDataTg.id), username: userDataTg.username })
         });
 
         const userData = await userResponse.json();

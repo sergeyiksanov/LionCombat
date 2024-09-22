@@ -46,7 +46,7 @@ const GameScreen = () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: userDataTg.id, username: userDataTg.username })
+          body: JSON.stringify({ id: String(userDataTg.id), username: userDataTg.username })
         });
 
         const userData = await userResponse.json();
@@ -108,7 +108,7 @@ const GameScreen = () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: userDataTg.id, add_count_points: pointsToSend })
+          body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
         }).finally(() => {
           setPointsToSend(0);
         });
