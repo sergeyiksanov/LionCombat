@@ -30,7 +30,7 @@ const GameScreen = () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: String(initDataUnsafe.id), username: initDataUnsafe.username, avatar_url: initDataUnsafe.photo_url })
+          body: JSON.stringify({ id: String(initDataUnsafe.id), username: initDataUnsafe.username })
         });
 
         const userData = await userResponse.json();
