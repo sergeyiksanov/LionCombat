@@ -67,9 +67,30 @@ const GameScreen = () => {
 
     fetchData();
 
+    const sendPoints = async () => {
+      try {
+        const sendPointResponse = await fetch(baseUrl + "/users/add_points", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': true
+          },
+          body: JSON.stringify({ id: String(initDataUnsafe.id), add_count_points: pointsToSend }),
+        });
+
+        const newUserData = await sendPointResponse.json();
+        setUser(newUserData.data);
+        setPoints(newUserData.CountPoints);
+      } catch(error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
     const interval = setInterval(() => {
-      setPoints(points + 1);
-    }, 1000);
+      sendPoints();
+    }, 3000);
 
     return () => clearInterval(interval);
   })
