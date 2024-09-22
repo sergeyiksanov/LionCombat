@@ -119,7 +119,7 @@ const GameScreen = () => {
       </Button>
       <Progress value={points} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: points }]} />
       <h3>{points}</h3>
-      <Button onClick={() => handleAddPoints()} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
+      <Button onClick={() => setPoints(points + 1)} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
       </Button>
     </div>
