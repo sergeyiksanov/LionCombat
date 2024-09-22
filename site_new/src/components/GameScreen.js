@@ -8,9 +8,6 @@ import ButtonImage from './../images/button-image.png';
 const baseUrl = '/api/api';
 
 const GameScreen = () => {
-  // const WebApp = window.Telegram.WebApp;
-  // const initDataUnsafe = WebApp.initDataUnsafe.user;
-
   const idForTest = '6228723943';
   const usernameForTest = 'sergeyiksanov';
 
@@ -33,7 +30,6 @@ const GameScreen = () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          // body: JSON.stringify({ id: String(initDataUnsafe.id), username: initDataUnsafe.username }),
           body: JSON.stringify({ id: idForTest, username: usernameForTest })
         });
 
@@ -70,7 +66,7 @@ const GameScreen = () => {
     const handleUnload = async () => {
       console.log("SEND POINTS");
       if (pointsToSend > 0) {
-        await fetch(baseUrl + `/users/add_points`, {
+        await fetch(baseUrl + /users/add_points, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -90,10 +86,13 @@ const GameScreen = () => {
 
   const handleAddPoints = () => {
     console.log("ADD POINTS")
-    const nl = levels.find(level => level.ID === currentLevel?.ID + 1)
-    if (initialPoints + pointsToSend + 1 >= nl?.NeedPoints) {
-      setCurrentLevel(nl);
+    const nextLevel = levels.find(level => level.ID === currentLevel?.ID + 1);
+    
+    // Проверяем, хватает ли очков для перехода на следующий уровень
+    if (initialPoints + pointsToSend + 1 >= nextLevel?.NeedPoints) {
+      setCurrentLevel(nextLevel);
     }
+    
     setPointsToSend(pointsToSend + 1);
   };
 
@@ -105,7 +104,7 @@ const GameScreen = () => {
     );
   }
 
-  const progress = (initialPoints + pointsToSend) / levels?.find(level => level.ID === 1 + currentLevel?.ID)?.NeedPoints * 100;
+  const progress = (initialPoints + pointsToSend) / levels?.find(level => level.ID === currentLevel?.ID + 1)?.NeedPoints * 100;
 
   return (
     <div className="game-screen" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px' }}>
