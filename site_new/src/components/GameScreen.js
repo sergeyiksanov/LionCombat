@@ -86,16 +86,10 @@ const GameScreen = () => {
     return () => {
       window.removeEventListener('beforeunload', handleUnload);
     };
-  }, [idForTest, usernameForTest, pointsToSend]);
+  }, [idForTest, usernameForTest, pointsToSend, currentLevel]);
 
   const handleAddPoints = () => {
     console.log("ADD POINTS")
-    if (initialPoints + pointsToSend + 1 >= currentLevel.NeedPoints) {
-      const nextLevel = levels.find(level => level.LevelNumber === currentLevel.LevelNumber + 1);
-      if (nextLevel) {
-        setCurrentLevel(nextLevel); // Обновляем уровень только в интерфейсе
-      }
-    }
     setPointsToSend(pointsToSend + 1);
   };
 
@@ -108,7 +102,7 @@ const GameScreen = () => {
     );
   }
 
-  const progress = initialPoints + pointsToSend;
+  const progress = ((initialPoints + pointsToSend) / levels.find(level => level.ID === currentLevel.LevelID + 1).NeedPoints) * 100;
 
   return (
     <div className="game-screen" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px' }}>
@@ -117,8 +111,8 @@ const GameScreen = () => {
       <Button style={{ marginBottom: '16px', width: '100%' }} onClick={() => navigate('/levels')} view='outlined' size='xl'>
         {currentLevel?.Name + " (" + currentLevel?.LevelNumber + ")"}
       </Button>
-      <Progress value={initialPoints + pointsToSend} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: initialPoints + pointsToSend }]} />
-      <h3>{initialPoints + pointsToSend}</h3>
+      <Progress value={progress} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: progress }]} />
+      <h3>{initialPoints + pointsToSend} / {levels.find(level => level.ID === user.LevelID + 1).NeedPoints}</h3>
       <Button onClick={handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
       </Button>
