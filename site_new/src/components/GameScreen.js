@@ -122,3 +122,5 @@ const GameScreen = () => {
     </div>
   );
 };
+
+export default GameScreen;
