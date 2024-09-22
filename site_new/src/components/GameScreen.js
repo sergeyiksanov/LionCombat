@@ -169,16 +169,18 @@ const GameScreen = () => {
         {currentLevel?.Name + " (" + currentLevel?.LevelNumber + ")"}
       </Button>
       
+      <div style={{ width: '192px' }}>
       <Progress 
         value={progress} 
         style={{ 
-          width: '192px',
+          width: '100%',
           marginBottom: '16px' 
         }} 
         size='m' 
         theme='default' 
         stack={[{ color: '#33ff3c', value: progress }]} 
       />
+      </div>
       
       <h3>{fullPoints} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
       
