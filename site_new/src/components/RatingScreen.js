@@ -7,12 +7,11 @@ const users = [
   ];
   
   const RatingScreen = () => {
-    const userAvatar = ''
     
     return (
       <div className="rating-screen">
         {users.map((user) => (
-          <User avatar={userAvatar}>Юзернейм: {user.username} | Своишки: {user.points} | Уровень: {user.level}</User>
+          <User>Юзернейм: {user.username} | Своишки: {user.points} | Уровень: {user.level}</User>
         ))}
       </div>
     );
