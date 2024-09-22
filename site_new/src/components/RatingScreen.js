@@ -5,22 +5,24 @@ const users = [
     { username: 'Player2', points: 200, level: '2' },
     // добавь остальных пользователей
   ];
-  
-  const RatingScreen = () => {
-    
-    const items = users.map((user) => {
-      console.log(user);
-      return (
-        <User>Юзернейм: {user.username} | Своишки: {user.points} | Уровень: {user.level}</User>
-      );
-    });
 
+  //<User>Юзернейм: {user.username} | Своишки: {user.points} | Уровень: {user.level}</User>
+  
+const RatingScreen = () => {
+  const items = users.map((user) => {
+    console.log(user)
     return (
-      <div className="rating-screen">
-        {items}
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '16px', marginBottom: '16px'}}>
+        <User>Юзернейм: {user.username} | Своишки: {user.points} | Уровень: {user.level}</User>
       </div>
     );
-  };
+  });
   
-  export default RatingScreen;
+  return (
+    <div className="rating-screen">
+      {items}
+    </div>
+  );
+};
   
+export default RatingScreen;
