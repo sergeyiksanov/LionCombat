@@ -13,6 +13,8 @@ const users = [
 
   //<User>Юзернейм: {user.username} | Своишки: {user.points} | Уровень: {user.level}</User>
   
+const baseUrl = '/api/api'
+
 const RatingScreen = () => {
   const [levels, setLevels] = useState([]);
   fetch(baseUrl + "/levels", {
