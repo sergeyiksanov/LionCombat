@@ -17,6 +17,7 @@ const GameScreen = () => {
   const [initialPoints, setInitialPoints] = useState(0);
   const [pointsToSend, setPointsToSend] = useState(0); // Накопленные очки
   const [loading, setLoading] = useState(true);
+  const [fullPoints, setFullPuints] = useState(0);
 
   const navigate = useNavigate();
 
@@ -65,6 +66,10 @@ const GameScreen = () => {
 
   }, [idForTest, usernameForTest, pointsToSend]);
 
+  useEffect(() => {
+    setFullPuints(initialPoints);
+  }, [initialPoints]);
+
   // Второй useEffect для обновления уровня при изменении очков
   useEffect(() => {
     if (currentLevel && levels.length > 0) {
@@ -87,8 +92,9 @@ const GameScreen = () => {
             'ngrok-skip-browser-warning': true
           },
           body: JSON.stringify({ id: idForTest, add_count_points: pointsToSend })
+        }).finally(() => {
+          setPointsToSend(0);
         })
-        setPointsToSend(0)
       }
     }, 2000);
   
@@ -96,6 +102,7 @@ const GameScreen = () => {
   })
 
   const handleAddPoints = () => {
+    setFullPuints(fullPoints + 1);
     setPointsToSend(pointsToSend + 1);
   };
 
@@ -107,7 +114,7 @@ const GameScreen = () => {
     );
   }
 
-  const progress = (initialPoints + pointsToSend) / levels?.find(level => level.ID === currentLevel?.ID + 1)?.NeedPoints * 100;
+  const progress = fullPoints / levels?.find(level => level.ID === currentLevel?.ID + 1)?.NeedPoints * 100;
 
   return (
     <div className="game-screen" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px' }}>
@@ -117,7 +124,7 @@ const GameScreen = () => {
         {currentLevel?.Name + " (" + currentLevel?.LevelNumber + ")"}
       </Button>
       <Progress value={progress} style={{ width: '100%' }} size='m' theme='default' stack={[{ color: '#33ff3c', value: progress }]} />
-      <h3>{initialPoints + pointsToSend} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
+      <h3>{fullPoints} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
       <Button onClick={handleAddPoints} view="flat" pin='circle-circle' size="xs" style={{ height: 'auto' }}>
         <img src={ButtonImage} width="192px" />
       </Button>
