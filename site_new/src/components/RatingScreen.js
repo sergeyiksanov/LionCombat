@@ -20,14 +20,14 @@ const RatingScreen = () => {
       console.log(JSON.parse(data).data);
       setRating(JSON.parse(data).data);
     })
-  }, [rating]);
+  });
 
   const items = rating.map((user) => {
     console.log(user)
     return (
       <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>Юзернейм: {user.Username} | Своишки: {user.CountPoints} | Уровень: {user.LevelID}</UserLabel>
     );
-  }, [baseUrl]);
+  });
   
   return (
     <div className="rating-screen">
