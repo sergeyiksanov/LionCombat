@@ -62,7 +62,7 @@ func (c *UserUseCase) AddPointsToUser(ctx context.Context, request *model.Update
 		ID:          user.ID,
 		LevelID:     levelId,
 		Username:    user.Username,
-		CountPoints: user.CountPoints + request.AddCountPoints,
+		CountPoints: request.AddCountPoints,
 		CreatedAt:   user.CreatedAt,
 	}
 

@@ -30,7 +30,6 @@ const GameScreen = () => {
   const [currentLevel, setCurrentLevel] = useState(null);
   const [initialPoints, setInitialPoints] = useState(0);
   const [pointsToSend, setPointsToSend] = useState(0);
-  const [pointsToSendSave, setPointsToSendSave] = useState(0); // Накопленные очки
   const [loading, setLoading] = useState(true);
   const [fullPoints, setFullPuints] = useState(0);
 
@@ -90,11 +89,11 @@ const GameScreen = () => {
     if (currentLevel && levels.length > 0) {
       const nextLevel = levels.find(level => level.ID === currentLevel?.ID + 1);
       
-      if (initialPoints + pointsToSendSave >= nextLevel?.NeedPoints) {
+      if (initialPoints + pointsToSend >= nextLevel?.NeedPoints) {
         setCurrentLevel(nextLevel);
       }
     }
-  }, [pointsToSendSave, currentLevel, initialPoints, levels]);
+  }, [pointsToSend, currentLevel, initialPoints, levels]);
 
   const timeoutRef = useRef(null);
 
@@ -110,8 +109,6 @@ const GameScreen = () => {
             'ngrok-skip-browser-warning': true
           },
           body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
-        }).finally(() => {
-          setPointsToSend(0);
         });
       }, 500)
     }
@@ -119,9 +116,7 @@ const GameScreen = () => {
 
   const handleAddPoints = () => {
     clearTimeout(timeoutRef.current);
-    // setFullPuints(fullPoints + 1);
     setPointsToSend(pointsToSend + 1);
-    setPointsToSendSave(pointsToSendSave + 1);
   };
 
   if (loading) {
@@ -183,7 +178,7 @@ const GameScreen = () => {
       />
       </div>
       
-      <h3>{initialPoints + pointsToSendSave} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
+      <h3>{initialPoints + pointsToSend} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
       
       <Button 
         onClick={handleAddPoints} 
