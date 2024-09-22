@@ -69,20 +69,20 @@ const LevelsScreen = () => {
       return (
         <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '16px', marginBottom: '16px', border: '2px solid #33ff3c', padding: '16px', borderRadius: '16px'}}>
           <img src={
-          currentLevel.ID === 1 || currentLevel.ID === null ? Level1Image :
-          currentLevel.ID === 2 ? Level2Image :
-          currentLevel.ID === 3 ? Level3Image :
-          currentLevel.ID === 4 ? Level4Image :
-          currentLevel.ID === 5 ? Level5Image :
-          currentLevel.ID === 6 ? Level6Image :
-          currentLevel.ID === 7 ? Level7Image :
-          currentLevel.ID === 8 ? Level8Image :
-          currentLevel.ID === 9 ? Level9Image :
-          currentLevel.ID === 10 ? Level10Image :
-          currentLevel.ID === 11 ? Level11Image :
-          currentLevel.ID === 12 ? Level12Image :
-          currentLevel.ID === 13 ? Level13Image :
-          currentLevel.ID === 14 ? Level14Image : 
+          level.ID === 1 || currentLevel.ID === null ? Level1Image :
+          level.ID === 2 ? Level2Image :
+          level.ID === 3 ? Level3Image :
+          level.ID === 4 ? Level4Image :
+          level.ID === 5 ? Level5Image :
+          level.ID === 6 ? Level6Image :
+          level.ID === 7 ? Level7Image :
+          level.ID === 8 ? Level8Image :
+          level.ID === 9 ? Level9Image :
+          level.ID === 10 ? Level10Image :
+          level.ID === 11 ? Level11Image :
+          level.ID === 12 ? Level12Image :
+          level.ID === 13 ? Level13Image :
+          level.ID === 14 ? Level14Image : 
           Level15Image
         } width={'100px'} style={{marginRight: '16px'}}/>
           <div>
