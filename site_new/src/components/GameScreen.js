@@ -172,8 +172,8 @@ const GameScreen = () => {
       <Progress 
         value={progress} 
         style={{ 
-          width: '100%', 
-          maxWidth: '400px', 
+          width: '100%',  
+          width: '192px',
           marginBottom: '16px' 
         }} 
         size='m' 
