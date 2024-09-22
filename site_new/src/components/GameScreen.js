@@ -22,8 +22,8 @@ import Level15Image from './../images/level_15.png';
 const baseUrl = '/api/api';
 
 const GameScreen = () => {
-  const idForTest = '6228723943';
-  const usernameForTest = 'sergeyiksanov';
+  const webApp = window.Telegram.WebApp;
+  const userDataTg = webApp.initDataUnsafe.user;
 
   const [user, setUser] = useState(null);
   const [levels, setLevels] = useState([]);
@@ -46,7 +46,7 @@ const GameScreen = () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: idForTest, username: usernameForTest })
+          body: JSON.stringify({ id: userDataTg.id, username: userDataTg.username })
         });
 
         const userData = await userResponse.json();
@@ -78,7 +78,7 @@ const GameScreen = () => {
 
     fetchData();
 
-  }, [idForTest, usernameForTest, pointsToSend]);
+  }, [userDataTg.id, userDataTg.username, pointsToSend]);
 
   useEffect(() => {
     setFullPuints(initialPoints);
@@ -108,7 +108,7 @@ const GameScreen = () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: idForTest, add_count_points: pointsToSend })
+          body: JSON.stringify({ id: userDataTg.id, add_count_points: pointsToSend })
         }).finally(() => {
           setPointsToSend(0);
         });

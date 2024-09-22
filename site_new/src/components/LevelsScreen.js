@@ -24,8 +24,8 @@ const LevelsScreen = () => {
   const [user, setUser] = useState(null);
   const [levels, setLevels] = useState([]);
 
-  const idForTest = '6228723943';
-  const usernameForTest = 'sergeyiksanov';
+  const webApp = window.Telegram.WebApp;
+  const userDataTg = webApp.initDataUnsafe.user;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +37,7 @@ const LevelsScreen = () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': true
           },
-          body: JSON.stringify({ id: idForTest, username: usernameForTest })
+          body: JSON.stringify({ id: userDataTg.id, username: userDataTg.username })
         });
 
         const userData = await userResponse.json();
@@ -61,7 +61,7 @@ const LevelsScreen = () => {
 
     fetchData();
 
-  }, [idForTest, usernameForTest]);
+  }, [userDataTg.id, userDataTg.username]);
 
   const items = levels.map((level) => {
     console.log(level)
