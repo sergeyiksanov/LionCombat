@@ -109,7 +109,7 @@ const GameScreen = () => {
     );
   }
 
-  const progress = (points / currentLevel.NeedPoints) * 100;
+  const progress = points;
 
   return (
     <div className="game-screen" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '100px' }}>
