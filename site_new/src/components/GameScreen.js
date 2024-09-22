@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Progress, UserLabel, Loader } from '@gravity-ui/uikit';
 import '@gravity-ui/uikit/styles/fonts.css';
@@ -81,11 +81,13 @@ const GameScreen = () => {
     }
   }, [pointsToSend, currentLevel, initialPoints, levels]);
 
+  const timeoutRef = useRef(null);
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      console.log('This will be called every 2 seconds');
-      if (pointsToSend > 0) {
-        fetch(baseUrl + "/users/add_points", {
+    if (pointsToSend > 0) {
+      timeoutRef.current = setTimeout(async () => {
+        console.log("SEND POINTS");
+        await fetch(baseUrl + "/users/add_points", {
           method: "POST",
           headers: {
             'Content-Type': 'application/json',
@@ -94,14 +96,14 @@ const GameScreen = () => {
           body: JSON.stringify({ id: idForTest, add_count_points: pointsToSend })
         }).finally(() => {
           setPointsToSend(0);
-        })
-      }
-    }, 100);
-  
-    return () => clearInterval(interval);
-  })
+        });
+        setPointsToSend(0);
+      }, 500)
+    }
+  });
 
   const handleAddPoints = () => {
+    clearTimeout(timeoutRef.current);
     setFullPuints(fullPoints + 1);
     setPointsToSend(pointsToSend + 1);
   };
