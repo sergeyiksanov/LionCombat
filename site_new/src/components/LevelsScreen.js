@@ -4,7 +4,7 @@ import ButtonImage from './../images/button-image.png';
 import LockImage from './../images/Lock@3x.svg';
 import { useState } from 'react';
 
-const baseUrl = 'http://lioncombat.hopto.org/api'
+const baseUrl = 'http://localhost:3001/api'
   
 const LevelsScreen = () => {
   const [levels, setLevels] = useState([]);
