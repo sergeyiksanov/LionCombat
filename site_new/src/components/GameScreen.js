@@ -31,6 +31,7 @@ const GameScreen = () => {
   const [initialPoints, setInitialPoints] = useState(0);
   const [loading, setLoading] = useState(true);
   const [pointsToSend, setPointsToSend] = useState(0);
+  const [hasChanges, setHasChanges] = useState(false);
   
   const navigate = useNavigate();
 
@@ -96,10 +97,9 @@ const GameScreen = () => {
   const timeoutRef = useRef(null);
 
   useEffect(() => {
-    console.log("TIMER");
-    if (pointsToSend > 0) {
-      const interval = setInterval(async () => {
-        console.log("SEND POINTS");
+    const interval = setInterval(async () => {
+      console.log("SEND POINTS");
+      if (hasChanges) {
         await fetch(baseUrl + "/users/add_points", {
           method: "POST",
           headers: {
@@ -107,14 +107,17 @@ const GameScreen = () => {
             'ngrok-skip-browser-warning': true
           },
           body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
+        }).finally(() => {
+          setHasChanges(false);
         });
-      }, 1000);
-      return () => clearInterval(interval);
-    }
-  });
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [hasChanges]);
 
   const handleAddPoints = () => {
     setPointsToSend(pointsToSend + 1);
+    setHasChanges(true);
   };
 
   if (loading) {
