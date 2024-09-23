@@ -41,8 +41,8 @@ const RatingScreen = () => {
     console.log(user)
     return (
       <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: "100%", maxWidth: '400px', margin: '8px auto' }}>
-          <h3>{index + 1}</h3>
-          <UserLabel type="person" style={{ width: "100%", marginRight: '8px' }}>{user.Username} | {user.CountPoints} | {user.LevelID} LVL</UserLabel>
+          <h3 style={{marginRight: '8px'}}>{index + 1}</h3>
+          <UserLabel type="person" style={{ width: "100%" }}>{user.Username} | {user.CountPoints} | {user.LevelID} LVL</UserLabel>
       </div>
     );
   });
