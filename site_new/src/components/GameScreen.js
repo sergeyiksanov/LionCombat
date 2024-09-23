@@ -31,7 +31,6 @@ const GameScreen = () => {
   const [initialPoints, setInitialPoints] = useState(0);
   const [loading, setLoading] = useState(true);
   const [pointsToSend, setPointsToSend] = useState(0);
-  const [hasChanges, setHasChanges] = useState(false);
   
   const navigate = useNavigate();
 
@@ -98,9 +97,9 @@ const GameScreen = () => {
 
   useEffect(() => {
     console.log("TIMER");
-    const interval = setInterval(async () => {
-      console.log("SEND POINTS");
-      if (hasChanges) {
+    if (pointsToSend > 0) {
+      const interval = setInterval(async () => {
+        console.log("SEND POINTS");
         await fetch(baseUrl + "/users/add_points", {
           method: "POST",
           headers: {
@@ -109,33 +108,13 @@ const GameScreen = () => {
           },
           body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
         });
-      }
-    }, 1000);
-    setHasChanges(false);
-    return () => clearInterval(interval);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
   });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-     if (hasChanges) {
-      fetch(baseUrl + "/users/add_points", {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': true
-        },
-        body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
-      }).finally(() => {
-        setHasChanges(false);
-      });
-     }
-    }, 1000);
-    return () => clearInterval(interval);
-  },[])
 
   const handleAddPoints = () => {
     setPointsToSend(pointsToSend + 1);
-    setHasChanges(true);
   };
 
   if (loading) {
