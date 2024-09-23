@@ -31,6 +31,7 @@ const GameScreen = () => {
   const [initialPoints, setInitialPoints] = useState(0);
   const [loading, setLoading] = useState(true);
   const [pointsToSend, setPointsToSend] = useState(0);
+  const [hasChanges, setHasChanges] = useState(false);
   
   const navigate = useNavigate();
 
@@ -97,7 +98,7 @@ const GameScreen = () => {
 
   useEffect(() => {
     console.log("TIMER");
-    if (pointsToSend > 0) {
+    if (pointsToSend > initialPoints && hasChanges) {
       const interval = setInterval(async () => {
         console.log("SEND POINTS");
         await fetch(baseUrl + "/users/add_points", {
@@ -109,12 +110,14 @@ const GameScreen = () => {
           body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
         });
       }, 1000);
+      setHasChanges(false);
       return () => clearInterval(interval);
     }
   });
 
   const handleAddPoints = () => {
     setPointsToSend(pointsToSend + 1);
+    setHasChanges(true);
   };
 
   if (loading) {
