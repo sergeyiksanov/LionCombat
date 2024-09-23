@@ -26,10 +26,6 @@ async def command_start_handler(message: Message, bot: Bot) -> None:
     kb = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="Тапать", web_app=WebAppInfo(url="https://lioncombat.hopto.org/"))]
     ])
-
-    photo_url = message.from_user.get_profile_photos(0, 1)
-    print(photo_url)
-
     await message.answer("Это игра Lion Kombat!\nНажимай на льва и зарабатывай за это коины.\nТвоя цель - возглавить рейтинг! Удачи!!!\nТапаем по экранчику, тапаем, тапаем", reply_markup=kb)
 
 
