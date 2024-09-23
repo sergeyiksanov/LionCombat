@@ -24,9 +24,9 @@ async def command_start_handler(message: Message, bot: Bot) -> None:
     #     menu_button=MenuButtonWebApp(text="Open", web_app=WebAppInfo(url="https://lioncombat.hopto.org/"))
     # )
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="Тапаем братья", web_app=WebAppInfo(url="https://lioncombat.hopto.org/"))]
+        [InlineKeyboardButton(text="Тапать", web_app=WebAppInfo(url="https://lioncombat.hopto.org/"))]
     ])
-    await message.answer("Это игра Lion Kombat! Нажимай на льва и зарабатывай за это коины. Твоя цель - возглавить рейтинг! Удачи!!!", reply_markup=kb)
+    await message.answer("Это игра Lion Kombat!\nНажимай на льва и зарабатывай за это коины.\nТвоя цель - возглавить рейтинг! Удачи!!!\nТапаем по экранчику, тапаем, тапаем", reply_markup=kb)
 
 
 async def main() -> None:
