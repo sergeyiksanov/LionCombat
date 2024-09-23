@@ -115,6 +115,24 @@ const GameScreen = () => {
     return () => clearInterval(interval);
   });
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+     if (hasChanges) {
+      fetch(baseUrl + "/users/add_points", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': true
+        },
+        body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
+      }).finally(() => {
+        setHasChanges(false);
+      });
+     }
+    }, 1000);
+    return () => clearInterval(interval);
+  },[])
+
   const handleAddPoints = () => {
     setPointsToSend(pointsToSend + 1);
     setHasChanges(true);
