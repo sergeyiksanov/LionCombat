@@ -112,6 +112,7 @@ const GameScreen = () => {
           const userData = userResponse.json();
           setUser(userData.data);
           setInitialPoints(userData.data.CountPoints);
+          setPointsToSend(userData.data.CountPoints);
         });
       }
     }, 5000);
