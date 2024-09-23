@@ -58,11 +58,18 @@ func (c *UserUseCase) AddPointsToUser(ctx context.Context, request *model.Update
 		levelId++
 	}
 
+	newPoints := int64(0)
+	if request.AddCountPoints-user.CountPoints > 40 {
+		newPoints = user.CountPoints
+	} else {
+		newPoints = request.AddCountPoints
+	}
+
 	userNew := entity.User{
 		ID:          user.ID,
 		LevelID:     levelId,
 		Username:    user.Username,
-		CountPoints: request.AddCountPoints,
+		CountPoints: newPoints,
 		CreatedAt:   user.CreatedAt,
 	}
 

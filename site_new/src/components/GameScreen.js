@@ -35,19 +35,20 @@ const GameScreen = () => {
   
   const navigate = useNavigate();
 
+  const userResponse = fetch(baseUrl + "/users/auth", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': true
+    },
+    body: JSON.stringify({ id: String(userDataTg.id), username: userDataTg.username })
+  });
+
   // Первый useEffect для загрузки данных о пользователе и уровнях
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Получаем информацию о пользователе
-        const userResponse = await fetch(baseUrl + "/users/auth", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': true
-          },
-          body: JSON.stringify({ id: String(userDataTg.id), username: userDataTg.username })
-        });
+        // Получаем информацию о пользовател
 
         const userData = await userResponse.json();
         setUser(userData.data);
@@ -94,8 +95,6 @@ const GameScreen = () => {
     }
   }, [pointsToSend, initialPoints, levels]);
 
-  const timeoutRef = useRef(null);
-
   useEffect(() => {
     const interval = setInterval(async () => {
       console.log("SEND POINTS");
@@ -109,11 +108,15 @@ const GameScreen = () => {
           body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
         }).finally(() => {
           setHasChanges(false);
+        }).finally(() => {
+          const userData = userResponse.json();
+          setUser(userData.data);
+          setInitialPoints(userData.data.CountPoints);
         });
       }
-    }, 1000);
+    }, 5000);
     return () => clearInterval(interval);
-  }, [hasChanges]);
+  });
 
   const handleAddPoints = () => {
     setPointsToSend(pointsToSend + 1);
