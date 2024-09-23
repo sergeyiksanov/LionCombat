@@ -98,9 +98,9 @@ const GameScreen = () => {
 
   useEffect(() => {
     console.log("TIMER");
-    if (hasChanges) {
-      const interval = setInterval(async () => {
-        console.log("SEND POINTS");
+    const interval = setInterval(async () => {
+      console.log("SEND POINTS");
+      if (hasChanges) {
         await fetch(baseUrl + "/users/add_points", {
           method: "POST",
           headers: {
@@ -109,10 +109,10 @@ const GameScreen = () => {
           },
           body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
         });
-      }, 1000);
-      setHasChanges(false);
-      return () => clearInterval(interval);
-    }
+      }
+    }, 1000);
+    setHasChanges(false);
+    return () => clearInterval(interval);
   });
 
   const handleAddPoints = () => {
