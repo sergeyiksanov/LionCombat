@@ -40,13 +40,14 @@ const RatingScreen = () => {
   const items = rating.map((user) => {
     console.log(user)
     return (
-      <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>Юзернейм: {user.Username} | Своишки: {user.CountPoints} | Уровень: {user.LevelID}</UserLabel>
+      <UserLabel type="person" style={{ width: "100%", marginBottom: '16px' }}>{user.Username} | {user.CountPoints} | {user.LevelID}</UserLabel>
     );
   });
   
   return (
     <div className="rating-screen">
       <h1 style={{ width: '100%', textAlign: 'center' }}>Рейтинг</h1>
+      <h2>Юзернейм | Своишки | Уровень</h2>
       {items}
     </div>
   );
