@@ -98,7 +98,7 @@ const GameScreen = () => {
 
   useEffect(() => {
     console.log("TIMER");
-    if (pointsToSend > initialPoints && hasChanges) {
+    if (hasChanges) {
       const interval = setInterval(async () => {
         console.log("SEND POINTS");
         await fetch(baseUrl + "/users/add_points", {
