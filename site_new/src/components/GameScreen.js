@@ -125,7 +125,7 @@ const GameScreen = () => {
     );
   }
 
-  const progress = (pointsToSend / levels.find(level => level.ID + 1 === currentLevel?.ID)?.NeedPoints) * 100;
+  const progress = (pointsToSend / levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints) * 100;
   
   return (
     <div className="game-screen" style={{ 
