@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"slices"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -20,7 +21,7 @@ func main() {
 		AllowMethods: "GET,POST,HEAD,PUT,DELETE,OPTIONS", // Разрешенные методы
 	}))
 	app.Use(func(ctx *fiber.Ctx) error {
-		allowedOrigin := "https://lioncombat.hopto.org/" // Ваш домен
+		allowedOrigins := []string{"https://lioncombat.hopto.org/", "https://lioncombat.hopto.org/rating", "https://lioncombat.hopto.org/levels", "https://lioncombat.hopto.org/prizes"} // Ваш домен
 
 		// Получаем заголовки Origin и Referer
 		origin := ctx.Get("Origin")
@@ -28,7 +29,7 @@ func main() {
 		log.Warnf("FROM : %+v", origin)
 
 		// Если оба заголовка отсутствуют или не соответствуют разрешённому домену — блокируем запрос
-		if (origin == "" && referer == "") || (origin != allowedOrigin && referer != allowedOrigin) {
+		if (origin == "" && referer == "") || (!slices.Contains(allowedOrigins, origin) && !slices.Contains(allowedOrigins, referer)) {
 			return ctx.Status(fiber.StatusForbidden).SendString("Запрос заблокирован: неразрешённый домен")
 		}
 
