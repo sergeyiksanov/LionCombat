@@ -20,7 +20,7 @@ func main() {
 		AllowMethods: "GET,POST,HEAD,PUT,DELETE,OPTIONS", // Разрешенные методы
 	}))
 	app.Use(func(ctx *fiber.Ctx) error {
-		allowedOrigin := "https://youtube.com" // Ваш домен
+		allowedOrigin := "https://lioncombat.hopto.org/" // Ваш домен
 
 		// Получаем заголовки Origin и Referer
 		origin := ctx.Get("Origin")
