@@ -77,7 +77,7 @@ const GameScreen = () => {
 
     fetchData();
 
-  }, [userDataTg.id, userDataTg.username, pointsToSend]);
+  }, [userDataTg.id, userDataTg.username]);
 
   useEffect(() => {
     setPointsToSend(initialPoints);
@@ -108,7 +108,7 @@ const GameScreen = () => {
           },
           body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
         });
-      }, 3000);
+      }, 1000);
       return () => clearInterval(interval);
     }
   });
