@@ -37,10 +37,13 @@ const RatingScreen = () => {
     );
   }
 
-  const items = rating.map((user) => {
+  const items = rating.map((user, index) => {
     console.log(user)
     return (
-      <UserLabel type="person" style={{ width: "100%", maxWidth: '400px', textAlign: 'center', margin: '8px auto' }}>{user.Username} | {user.CountPoints} | {user.LevelID}</UserLabel>
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: "100%", maxWidth: '400px', margin: '8px auto' }}>
+          <h3>{index + 1}</h3>
+          <UserLabel type="person" style={{ width: "100%", marginRight: '8.px' }}>{user.Username} | {user.CountPoints} | {user.LevelID}</UserLabel>
+      </div>
     );
   });
   
