@@ -54,7 +54,7 @@ func (c *UserUseCase) AddPointsToUser(ctx context.Context, request *model.Update
 		return nil, fiber.ErrInternalServerError
 	}
 	levelId := user.LevelID
-	if user.CountPoints+request.AddCountPoints >= nextLevel.NeedPoints {
+	if request.AddCountPoints >= nextLevel.NeedPoints {
 		levelId++
 	}
 
