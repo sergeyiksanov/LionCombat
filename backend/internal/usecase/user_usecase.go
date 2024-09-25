@@ -48,12 +48,6 @@ func (c *UserUseCase) AddPointsToUser(ctx context.Context, request *model.Update
 		return nil, fiber.ErrNotFound
 	}
 
-	nextLevel := new(entity.Level)
-	if err := c.LevelRepository.GetById(tx, nextLevel, user.LevelID+1); err != nil {
-		c.Log.Warnf("Failed to get user level : %+v", err)
-		return nil, fiber.ErrInternalServerError
-	}
-
 	newPoints := user.CountPoints
 	levelId := user.LevelID
 	if request.AddCountPoints-user.CountPoints > 40 {
