@@ -161,7 +161,7 @@ func (c *UserUseCase) AuthUser(ctx context.Context, request *model.AuthUserReque
 			return nil, fiber.ErrInternalServerError
 		}
 
-		return converter.UserToResponse(user), nil
+		return converter.UserToResponse(newUser), nil
 	}
 
 	user := &entity.User{
