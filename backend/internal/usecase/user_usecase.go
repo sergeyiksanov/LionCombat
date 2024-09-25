@@ -137,9 +137,23 @@ func (c *UserUseCase) AuthUser(ctx context.Context, request *model.AuthUserReque
 
 	if total > 0 {
 		user := new(entity.User)
+
 		if err := c.UserRepository.GetById(tx, user, request.ID); err != nil {
 			c.Log.Warnf("Failed get user by id : %+v", err)
 			return nil, fiber.ErrInternalServerError
+		}
+
+		newUser := &entity.User{
+			ID:          user.ID,
+			Username:    request.Username,
+			AvatarUrl:   user.AvatarUrl,
+			LevelID:     user.LevelID,
+			CountPoints: user.CountPoints,
+			CreatedAt:   user.CreatedAt,
+		}
+		if err := c.UserRepository.Update(tx, newUser); err != nil {
+			c.Log.Warnf("Failed update username : %+v", err)
+			return nil, fiber.ErrBadRequest
 		}
 
 		if err := tx.Commit().Error; err != nil {
