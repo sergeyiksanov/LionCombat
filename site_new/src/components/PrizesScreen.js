@@ -1,25 +1,30 @@
 import LockImage from './../images/Lock@3x.svg';
+import TgPremiumImage from './../images/tg-premium.png';
+import ZnachokImage from './../images/znachok.png';
+import BurgerImage from './../images/burger.png';
+import { Card } from '@gravity-ui/uikit';
 
-const users = [
-    { username: 'Player1', points: 150, level: 'Уровень 1' },
-    { username: 'Player2', points: 200, level: 'Уровень 2' },
-    // добавь остальных пользователей
-  ];
+const RatingScreen = () => {
+  return (
+    <div className="rating-screen">
+      <Card theme='normal' type='container' view='filed' style={{ width: '192px', padding: '16px', display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '16px'}}>
+        <img src={TgPremiumImage} width='100px' style={{ marginBottom: '8px' }}/>
+        <p style={{ textAlign: 'center' }}>Подписка <b>Telegram Premium</b> на месяц</p>
+      </Card>
+      <Card theme='normal' type='container' view='filed' style={{ width: '192px', padding: '16px', display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '16px'}}>
+        <img src={ZnachokImage} width='100px' style={{ marginBottom: '8px' }}/>
+        <p style={{ textAlign: 'center' }}>Значки партии <b>X2</b></p>
+      </Card>
+      <Card theme='normal' type='container' view='filed' style={{ width: '192px', padding: '16px', display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '16px'}}>
+        <img src={BurgerImage} width='100px' style={{ marginBottom: '8px' }}/>
+        <p style={{ textAlign: 'center' }}>Бургер</p>
+      </Card>
+      <Card theme='normal' type='container' view='filed' style={{ width: '192px', padding: '16px', display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '16px'}}>
+        <img src={LockImage} width='100px' style={{ marginBottom: '8px' }}/>
+        <p style={{ textAlign: 'center' }}>Совместная фотография со <b>СВОЕЙ ПАРТИЕЙ</b> с автографами</p>
+      </Card>
+    </div>
+  );
+};
   
-  const RatingScreen = () => {
-    return (
-      <div className="rating-screen">
-        {/* {users.map((user) => (
-          <div key={user.username} className="user-card">
-            <h3>{user.username}</h3>
-            <p>{user.points} очков</p>
-            <p>{user.level}</p>
-          </div>
-        ))} */}
-        <img src={LockImage} width={'150px'} style={{marginRight: '16px'}}/>
-      </div>
-    );
-  };
-  
-  export default RatingScreen;
-  
+export default RatingScreen;  
