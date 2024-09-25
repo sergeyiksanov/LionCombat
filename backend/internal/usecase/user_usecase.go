@@ -63,6 +63,9 @@ func (c *UserUseCase) AddPointsToUser(ctx context.Context, request *model.Update
 		if err != nil {
 			return nil, fiber.ErrBadGateway
 		}
+		sort.Slice(levels, func(i, j int) bool {
+			return levels[i].ID < levels[j].ID
+		})
 		for i := range levels {
 			level := levels[i]
 			if newPoints >= level.NeedPoints {
