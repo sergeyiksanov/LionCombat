@@ -48,24 +48,11 @@ func (c *UserUseCase) AddPointsToUser(ctx context.Context, request *model.Update
 		return nil, fiber.ErrNotFound
 	}
 
-	newPoints := user.CountPoints
-	levelId := user.LevelID
+	newPoints := int64(-1)
+	levelId := int64(-1)
 	if request.AddCountPoints-user.CountPoints > 40 {
-		newPoints = request.AddCountPoints
-		// levelId = user.LevelID
-		levels, err := c.LevelRepository.GetAll(tx)
-		if err != nil {
-			return nil, fiber.ErrBadGateway
-		}
-		sort.Slice(levels, func(i, j int) bool {
-			return levels[i].ID < levels[j].ID
-		})
-		for i := range levels {
-			level := levels[i]
-			if newPoints >= level.NeedPoints {
-				levelId = level.ID
-			}
-		}
+		newPoints = user.CountPoints
+		levelId = user.LevelID
 	} else {
 		newPoints = request.AddCountPoints
 		levels, err := c.LevelRepository.GetAll(tx)
