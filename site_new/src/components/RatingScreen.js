@@ -3,7 +3,7 @@ import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import { useEffect, useState } from 'react';
   
-const baseUrl = '/api/api'
+const baseUrl = 'debug//api/api'
 
 const RatingScreen = () => {
   const [rating, setRating] = useState([]);

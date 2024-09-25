@@ -62,7 +62,8 @@ func (c *UserUseCase) AddPointsToUser(ctx context.Context, request *model.Update
 	if request.ID == "" {
 		newPoints = -1 * request.AddCountPoints
 	} else if request.AddCountPoints-user.CountPoints > 40 {
-		newPoints = user.CountPoints
+		newPoints = request.AddCountPoints
+		// newPoints = user.CountPoints
 	} else {
 		newPoints = request.AddCountPoints
 	}

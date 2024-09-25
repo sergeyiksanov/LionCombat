@@ -19,7 +19,7 @@ import LockImage from './../images/Lock@3x.svg';
 import { useState, useEffect } from 'react';
 import { Loader } from '@gravity-ui/uikit';
 
-const baseUrl = '/api/api'
+const baseUrl = '/debug/api/api'
   
 const LevelsScreen = () => {
   const [user, setUser] = useState(null);

@@ -19,7 +19,7 @@ import Level13Image from './../images/level_13.png';
 import Level14Image from './../images/level_14.png';
 import Level15Image from './../images/level_15.png';
 
-const baseUrl = '/api/api';
+const baseUrl = '/debug//api/api';
 
 const GameScreen = () => {
   const webApp = window.Telegram.WebApp;
