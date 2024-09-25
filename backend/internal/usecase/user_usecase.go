@@ -53,19 +53,34 @@ func (c *UserUseCase) AddPointsToUser(ctx context.Context, request *model.Update
 		c.Log.Warnf("Failed to get user level : %+v", err)
 		return nil, fiber.ErrInternalServerError
 	}
-	levelId := user.LevelID
-	if request.AddCountPoints >= nextLevel.NeedPoints {
-		levelId++
-	}
 
-	newPoints := int64(0)
-	if request.ID == "" {
-		newPoints = -1 * request.AddCountPoints
-	} else if request.AddCountPoints-user.CountPoints > 40 {
+	newPoints := user.CountPoints
+	levelId := user.LevelID
+	if request.AddCountPoints-user.CountPoints > 40 {
 		newPoints = request.AddCountPoints
-		// newPoints = user.CountPoints
+		// levelId = user.LevelID
+		levels, err := c.LevelRepository.GetAll(tx)
+		if err != nil {
+			return nil, fiber.ErrBadGateway
+		}
+		for i := range levels {
+			level := levels[i]
+			if newPoints >= level.NeedPoints {
+				levelId = level.ID
+			}
+		}
 	} else {
 		newPoints = request.AddCountPoints
+		levels, err := c.LevelRepository.GetAll(tx)
+		if err != nil {
+			return nil, fiber.ErrBadGateway
+		}
+		for i := range levels {
+			level := levels[i]
+			if newPoints >= level.NeedPoints {
+				levelId = level.ID
+			}
+		}
 	}
 
 	userNew := entity.User{
