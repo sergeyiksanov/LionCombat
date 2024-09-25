@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"slices"
 
-	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"lioncombat.com/internal/config"
 )
@@ -20,21 +18,21 @@ func main() {
 		AllowOrigins: "https://lioncombat.hopto.org",     // Разрешенные источники
 		AllowMethods: "GET,POST,HEAD,PUT,DELETE,OPTIONS", // Разрешенные методы
 	}))
-	app.Use(func(ctx *fiber.Ctx) error {
-		allowedOrigins := []string{"https://lioncombat.hopto.org/", "https://lioncombat.hopto.org/rating", "https://lioncombat.hopto.org/levels", "https://lioncombat.hopto.org/prizes"} // Ваш домен
+	// app.Use(func(ctx *fiber.Ctx) error {
+	// 	allowedOrigins := []string{"https://lioncombat.hopto.org/", "https://lioncombat.hopto.org/rating", "https://lioncombat.hopto.org/levels", "https://lioncombat.hopto.org/prizes"} // Ваш домен
 
-		// Получаем заголовки Origin и Referer
-		origin := ctx.Get("Origin")
-		referer := ctx.Get("Referer")
-		log.Warnf("FROM : %+v", origin)
+	// 	// Получаем заголовки Origin и Referer
+	// 	origin := ctx.Get("Origin")
+	// 	referer := ctx.Get("Referer")
+	// 	log.Warnf("FROM : %+v", origin)
 
-		// Если оба заголовка отсутствуют или не соответствуют разрешённому домену — блокируем запрос
-		if (origin == "" && referer == "") || (!slices.Contains(allowedOrigins, origin) && !slices.Contains(allowedOrigins, referer)) {
-			return ctx.Status(fiber.StatusForbidden).SendString("Запрос заблокирован: неразрешённый домен")
-		}
+	// 	// Если оба заголовка отсутствуют или не соответствуют разрешённому домену — блокируем запрос
+	// 	if (origin == "" && referer == "") || (!slices.Contains(allowedOrigins, origin) && !slices.Contains(allowedOrigins, referer)) {
+	// 		return ctx.Status(fiber.StatusForbidden).SendString("Запрос заблокирован: неразрешённый домен")
+	// 	}
 
-		return ctx.Next()
-	})
+	// 	return ctx.Next()
+	// })
 
 	config.Bootstrap(&config.BootstrapConfig{
 		DB:       db,
