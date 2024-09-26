@@ -26,28 +26,28 @@ import Level20Image from './../images/level_20.png';
 
 const baseUrl = '/debug/api/api';
 
-function getLevelInfo(currentPoints, levels) {
-  const curL = levels[0];
-  for (const level in levels) {
-    if (currentPoints >= level.NeedPoints) {
-      curL = level
-    }
-  }
-
-  return curL;
-}
-
-function getNextLevelInfo(currentPoints, levels) {
-  for (const level in levels) {
-    if (currentPoints < level.NeedPoints) {
-      return level.NeedPoints;
-    }
-  }
-
-  return -1;
-}
-
 const GameScreen = () => {
+  function getLevelInfo(currentPoints, levels) {
+    const curL = levels[0];
+    for (const level in levels) {
+      if (currentPoints >= level.NeedPoints) {
+        curL = level
+      }
+    }
+  
+    return curL;
+  }
+  
+  function getNextLevelInfo(currentPoints, levels) {
+    for (const level in levels) {
+      if (currentPoints < level.NeedPoints) {
+        return level.NeedPoints;
+      }
+    }
+  
+    return -1;
+  }
+
   const webApp = window.Telegram.WebApp;
   const userDataTg = webApp.initDataUnsafe.user;
 
