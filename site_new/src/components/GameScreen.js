@@ -28,23 +28,21 @@ const baseUrl = '/debug/api/api';
 
 const GameScreen = () => {
   function getLevelInfo(currentPoints, levels) {
-    const curL = levels[0];
-    for (const level in levels) {
+    let curL = levels[0];
+    for (const level of levels) {
       if (currentPoints >= level.NeedPoints) {
-        curL = level
+        curL = level;
       }
     }
-  
     return curL;
   }
   
   function getNextLevelInfo(currentPoints, levels) {
-    for (const level in levels) {
+    for (const level of levels) {
       if (currentPoints < level.NeedPoints) {
         return level.NeedPoints;
       }
     }
-  
     return -1;
   }
 
