@@ -26,13 +26,33 @@ import Level20Image from './../images/level_20.png';
 
 const baseUrl = '/debug/api/api';
 
+function getLevelInfo(currentPoints, levels) {
+  const curL = levels[0];
+  for (const level in levels) {
+    if (currentPoints >= level.NeedPoints) {
+      curL = level
+    }
+  }
+
+  return curL;
+}
+
+function getNextLevelInfo(currentPoints, levels) {
+  for (const level in levels) {
+    if (currentPoints < level.NeedPoints) {
+      return level.NeedPoints;
+    }
+  }
+
+  return -1;
+}
+
 const GameScreen = () => {
   const webApp = window.Telegram.WebApp;
   const userDataTg = webApp.initDataUnsafe.user;
 
   const [user, setUser] = useState(null);
   const [levels, setLevels] = useState([]);
-  const [currentLevel, setCurrentLevel] = useState(null);
   const [initialPoints, setInitialPoints] = useState(0);
   const [loading, setLoading] = useState(true);
   const [pointsToSend, setPointsToSend] = useState(0);
@@ -70,10 +90,6 @@ const GameScreen = () => {
         const levelsData = await levelsResponse.json();
         setLevels(levelsData.data);
 
-        // Устанавливаем начальный уровень, который пришел с данными о пользователе
-        const currentLvl = levelsData.data.find(level => level.ID === userData.data.LevelID);
-        setCurrentLevel(currentLvl);
-
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -87,19 +103,7 @@ const GameScreen = () => {
 
   useEffect(() => {
     setPointsToSend(initialPoints);
-  }, [initialPoints])
-
-  useEffect(() => {
-    if (currentLevel && levels.length > 0) {
-      const nextLevel = levels.find(level => level.ID === currentLevel?.ID + 1);
-      
-      if (initialPoints + pointsToSend >= nextLevel?.NeedPoints) {
-        setCurrentLevel(nextLevel);
-      }
-    }
-  }, [pointsToSend, initialPoints, levels]);
-
-  const timeoutRef = useRef(null);
+  }, [initialPoints]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -133,7 +137,7 @@ const GameScreen = () => {
     );
   }
 
-  const progress = (pointsToSend / levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints) * 100;
+  const progress = (pointsToSend / (getNextLevelInfo(pointsToSend, levels) !== -1 ? getNextLevelInfo(pointsToSend, levels) : 100)) * 100;
   
   return (
     <div className="game-screen" style={{ 
@@ -168,7 +172,7 @@ const GameScreen = () => {
         view='outlined' 
         size='xl'
       >
-        {currentLevel?.Name + " (" + currentLevel?.LevelNumber + ")"}
+        {getLevelInfo(pointsToSend, levels).Name + " (" + getLevelInfo(pointsToSend, levels).LevelNumber + ")"}
       </Button>
       
       <div style={{ width: '192px' }}>
@@ -184,7 +188,7 @@ const GameScreen = () => {
       />
       </div>
       
-      <h3>{pointsToSend} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
+      <h3>{pointsToSend} / {getNextLevelInfo(pointsToSend, levels) !== -1 ? getNextLevelInfo(pointsToSend, levels) : "∞"}</h3>
       
       <Button 
         onClick={handleAddPoints} 
@@ -200,25 +204,25 @@ const GameScreen = () => {
       >
         <img 
           src={
-            currentLevel.ID === 1 || currentLevel.ID === null ? Level1Image :
-            currentLevel.ID === 2 ? Level2Image :
-            currentLevel.ID === 3 ? Level3Image :
-            currentLevel.ID === 4 ? Level4Image :
-            currentLevel.ID === 5 ? Level5Image :
-            currentLevel.ID === 6 ? Level6Image :
-            currentLevel.ID === 7 ? Level7Image :
-            currentLevel.ID === 8 ? Level8Image :
-            currentLevel.ID === 9 ? Level9Image :
-            currentLevel.ID === 10 ? Level10Image :
-            currentLevel.ID === 11 ? Level11Image :
-            currentLevel.ID === 12 ? Level12Image :
-            currentLevel.ID === 13 ? Level13Image :
-            currentLevel.ID === 14 ? Level14Image : 
-            currentLevel.ID === 15 ? Level15Image : 
-            currentLevel.ID === 16 ? Level16Image : 
-            currentLevel.ID === 17 ? Level17Image : 
-            currentLevel.ID === 18 ? Level18Image : 
-            currentLevel.ID === 19 ? Level19Image : 
+            getLevelInfo(pointsToSend, levels).ID === 1 || getLevelInfo(pointsToSend, levels).ID === null ? Level1Image :
+            getLevelInfo(pointsToSend, levels).ID === 2 ? Level2Image :
+            getLevelInfo(pointsToSend, levels).ID === 3 ? Level3Image :
+            getLevelInfo(pointsToSend, levels).ID === 4 ? Level4Image :
+            getLevelInfo(pointsToSend, levels).ID === 5 ? Level5Image :
+            getLevelInfo(pointsToSend, levels).ID === 6 ? Level6Image :
+            getLevelInfo(pointsToSend, levels).ID === 7 ? Level7Image :
+            getLevelInfo(pointsToSend, levels).ID === 8 ? Level8Image :
+            getLevelInfo(pointsToSend, levels).ID === 9 ? Level9Image :
+            getLevelInfo(pointsToSend, levels).ID === 10 ? Level10Image :
+            getLevelInfo(pointsToSend, levels).ID === 11 ? Level11Image :
+            getLevelInfo(pointsToSend, levels).ID === 12 ? Level12Image :
+            getLevelInfo(pointsToSend, levels).ID === 13 ? Level13Image :
+            getLevelInfo(pointsToSend, levels).ID === 14 ? Level14Image : 
+            getLevelInfo(pointsToSend, levels).ID === 15 ? Level15Image : 
+            getLevelInfo(pointsToSend, levels).ID === 16 ? Level16Image : 
+            getLevelInfo(pointsToSend, levels).ID === 17 ? Level17Image : 
+            getLevelInfo(pointsToSend, levels).ID === 18 ? Level18Image : 
+            getLevelInfo(pointsToSend, levels).ID === 19 ? Level19Image : 
             Level20Image
           } 
           width="192px"
