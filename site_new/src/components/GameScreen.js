@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Progress, UserLabel, Loader } from '@gravity-ui/uikit';
 import '@gravity-ui/uikit/styles/fonts.css';
@@ -18,8 +18,13 @@ import Level12Image from './../images/level_12.png';
 import Level13Image from './../images/level_13.png';
 import Level14Image from './../images/level_14.png';
 import Level15Image from './../images/level_15.png';
+import Level16Image from './../images/level_16.png';
+import Level17Image from './../images/level_17.png';
+import Level18Image from './../images/level_18.png';
+import Level19Image from './../images/level_19.png';
+import Level20Image from './../images/level_20.png';
 
-const baseUrl = '/debug//api/api';
+const baseUrl = '/debug/api/api';
 
 const GameScreen = () => {
   const webApp = window.Telegram.WebApp;
@@ -66,9 +71,9 @@ const GameScreen = () => {
         setLevels(levelsData.data);
 
         // Устанавливаем начальный уровень, который пришел с данными о пользователе
-        const currentLevel = levelsData.data.find((level) => level.ID === userData.data.LevelID);
-        setCurrentLevel(currentLevel);
-        
+        const currentLvl = levelsData.data.find(level => level.ID === userData.data.LevelID);
+        setCurrentLevel(currentLvl);
+
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -77,42 +82,46 @@ const GameScreen = () => {
     };
 
     fetchData();
+
   }, [userDataTg.id, userDataTg.username]);
 
-  // Определение прогресса между уровнями
+  useEffect(() => {
+    setPointsToSend(initialPoints);
+  }, [initialPoints])
+
   useEffect(() => {
     if (currentLevel && levels.length > 0) {
       const nextLevel = levels.find(level => level.ID === currentLevel?.ID + 1);
-      if (nextLevel && initialPoints + pointsToSend >= nextLevel.NeedPoints) {
+      
+      if (initialPoints + pointsToSend >= nextLevel?.NeedPoints) {
         setCurrentLevel(nextLevel);
       }
     }
-  }, [pointsToSend, initialPoints, levels, currentLevel]);
+  }, [pointsToSend, initialPoints, levels]);
 
-  // Отправка очков каждые 3 секунды
+  const timeoutRef = useRef(null);
+
   useEffect(() => {
     const interval = setInterval(async () => {
+      console.log("SEND POINTS");
       if (hasChanges) {
-        try {
-          await fetch(baseUrl + "/users/add_points", {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json',
-              'ngrok-skip-browser-warning': true
-            },
-            body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
-          });
+        await fetch(baseUrl + "/users/add_points", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': true
+          },
+          body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
+        }).finally(() => {
           setHasChanges(false);
-        } catch (error) {
-          console.error('Error sending points:', error);
-        }
+        });
       }
     }, 3000);
     return () => clearInterval(interval);
-  }, [hasChanges, pointsToSend, userDataTg.id]);
+  }, [hasChanges]);
 
   const handleAddPoints = () => {
-    setPointsToSend(prev => prev + 1);
+    setPointsToSend(pointsToSend + 1);
     setHasChanges(true);
   };
 
@@ -124,9 +133,8 @@ const GameScreen = () => {
     );
   }
 
-  const nextLevel = levels.find(level => level.ID === currentLevel?.LevelNumber + 1);
-  const progress = nextLevel ? (pointsToSend / nextLevel.NeedPoints) * 100 : 100;
-
+  const progress = (pointsToSend / levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints) * 100;
+  
   return (
     <div className="game-screen" style={{ 
       display: 'flex', 
@@ -176,9 +184,7 @@ const GameScreen = () => {
       />
       </div>
       
-      <h3>
-        {pointsToSend} / {nextLevel ? nextLevel.NeedPoints : '∞'}
-      </h3>
+      <h3>{pointsToSend} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
       
       <Button 
         onClick={handleAddPoints} 
@@ -208,12 +214,18 @@ const GameScreen = () => {
             currentLevel.ID === 12 ? Level12Image :
             currentLevel.ID === 13 ? Level13Image :
             currentLevel.ID === 14 ? Level14Image : 
-            Level15Image
+            currentLevel.ID === 15 ? Level15Image : 
+            currentLevel.ID === 16 ? Level16Image : 
+            currentLevel.ID === 17 ? Level17Image : 
+            currentLevel.ID === 18 ? Level18Image : 
+            currentLevel.ID === 19 ? Level19Image : 
+            Level20Image
           } 
           width="192px"
         />
       </Button>
     </div>
+    
   );
 };
 
