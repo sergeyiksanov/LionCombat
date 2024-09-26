@@ -7,6 +7,7 @@ import { Card } from '@gravity-ui/uikit';
 const RatingScreen = () => {
   return (
     <div className="rating-screen">
+      <p style={{ width: '192px', textAlign: 'center' }}>Первые 5 в рейтинге будут выбирать по одному призу в порядке занятых мест.</p>
       <Card theme='normal' type='container' view='filed' style={{ width: '192px', padding: '16px', display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '16px'}}>
         <img src={TgPremiumImage} width='100px' style={{ marginBottom: '8px' }}/>
         <p style={{ textAlign: 'center' }}>Подписка <b>Telegram Premium</b> на месяц</p>
