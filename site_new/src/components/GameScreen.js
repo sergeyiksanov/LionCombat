@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Progress, UserLabel, Loader } from '@gravity-ui/uikit';
 import '@gravity-ui/uikit/styles/fonts.css';
@@ -66,9 +66,9 @@ const GameScreen = () => {
         setLevels(levelsData.data);
 
         // Устанавливаем начальный уровень, который пришел с данными о пользователе
-        const currentLvl = levelsData.data.find(level => level.ID === userData.data.LevelID);
-        setCurrentLevel(currentLvl);
-
+        const currentLevel = levelsData.data.find((level) => level.ID === userData.data.LevelID);
+        setCurrentLevel(currentLevel);
+        
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -77,46 +77,42 @@ const GameScreen = () => {
     };
 
     fetchData();
-
   }, [userDataTg.id, userDataTg.username]);
 
-  useEffect(() => {
-    setPointsToSend(initialPoints);
-  }, [initialPoints])
-
+  // Определение прогресса между уровнями
   useEffect(() => {
     if (currentLevel && levels.length > 0) {
       const nextLevel = levels.find(level => level.ID === currentLevel?.ID + 1);
-      
-      if (initialPoints + pointsToSend >= nextLevel?.NeedPoints) {
+      if (nextLevel && initialPoints + pointsToSend >= nextLevel.NeedPoints) {
         setCurrentLevel(nextLevel);
       }
     }
-  }, [pointsToSend, initialPoints, levels]);
+  }, [pointsToSend, initialPoints, levels, currentLevel]);
 
-  const timeoutRef = useRef(null);
-
+  // Отправка очков каждые 3 секунды
   useEffect(() => {
     const interval = setInterval(async () => {
-      console.log("SEND POINTS");
       if (hasChanges) {
-        await fetch(baseUrl + "/users/add_points", {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': true
-          },
-          body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
-        }).finally(() => {
+        try {
+          await fetch(baseUrl + "/users/add_points", {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json',
+              'ngrok-skip-browser-warning': true
+            },
+            body: JSON.stringify({ id: String(userDataTg.id), add_count_points: pointsToSend })
+          });
           setHasChanges(false);
-        });
+        } catch (error) {
+          console.error('Error sending points:', error);
+        }
       }
     }, 3000);
     return () => clearInterval(interval);
-  }, [hasChanges]);
+  }, [hasChanges, pointsToSend, userDataTg.id]);
 
   const handleAddPoints = () => {
-    setPointsToSend(pointsToSend + 1);
+    setPointsToSend(prev => prev + 1);
     setHasChanges(true);
   };
 
@@ -128,8 +124,9 @@ const GameScreen = () => {
     );
   }
 
-  const progress = (pointsToSend / levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints) * 100;
-  
+  const nextLevel = levels.find(level => level.ID === currentLevel?.LevelNumber + 1);
+  const progress = nextLevel ? (pointsToSend / nextLevel.NeedPoints) * 100 : 100;
+
   return (
     <div className="game-screen" style={{ 
       display: 'flex', 
@@ -179,7 +176,9 @@ const GameScreen = () => {
       />
       </div>
       
-      <h3>{pointsToSend} / {levels.find(level => level.ID === currentLevel?.LevelNumber + 1)?.NeedPoints}</h3>
+      <h3>
+        {pointsToSend} / {nextLevel ? nextLevel.NeedPoints : '∞'}
+      </h3>
       
       <Button 
         onClick={handleAddPoints} 
@@ -215,7 +214,6 @@ const GameScreen = () => {
         />
       </Button>
     </div>
-    
   );
 };
 
